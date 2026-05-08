@@ -38,6 +38,13 @@ nav { position: sticky; top: 0; z-index: 100; height: var(--nav-h); background: 
 .nav-toggle { display: none; cursor: pointer; background: none; border: none; }
 .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--ink); margin: 5px 0; transition: .3s; }
 
+/* Banner */
+.banner { position: relative; width: 100%; height: 320px; overflow: hidden; }
+.banner img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.banner-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(28,43,58,.55) 0%, rgba(28,43,58,.1) 60%, transparent 100%); display: flex; align-items: flex-end; padding: 1.8rem clamp(1.5rem,5vw,4rem); }
+.banner-overlay span { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,.85); letter-spacing: .04em; }
+@media (max-width: 700px) { .banner { height: 200px; } }
+
 /* Hero */
 .hero { padding: clamp(4rem,10vw,8rem) clamp(1.5rem,5vw,4rem); display: grid; grid-template-columns: 1fr 340px; gap: 5rem; align-items: start; max-width: 1200px; margin: 0 auto; }
 .hero-eyebrow { font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
@@ -148,4 +155,3 @@ footer { border-top: 1px solid var(--rule); padding: 2.5rem clamp(1.5rem,5vw,4re
   .nav-toggle { display: block; }
   .pub-item { grid-template-columns: 1fr; gap: .4rem; }
 }
-
