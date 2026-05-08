@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Dario Maimone Ansaldo Patti</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="contact" class="loading">
+
+<nav>
+  <a class="nav-logo" href="index.html"></a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li class="nav-item"><a href="index.html">Home</a></li>
+    <li class="nav-item"><a href="research.html">Research</a></li>
+    <li class="nav-item"><a href="teaching.html">Teaching</a></li>
+    <li class="nav-item"><a href="resources.html">Resources</a></li>
+    <li class="nav-item"><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header fade-in">
+  <p class="page-eyebrow">Contact</p>
+  <h1 class="page-title">Get in<br><em>Touch</em></h1>
+  <p class="page-intro">Email is the preferred method of contact. I respond to all queries within a few working days.</p>
+</div>
+
+<section class="section">
+  <div class="contact-layout">
+    <div>
+      <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:300;margin-bottom:2rem;color:var(--ink);">Affiliation &amp; Office</h2>
+
+      <div style="margin-bottom:2.5rem;">
+        <p style="font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;">Position</p>
+        <p style="font-size:.95rem;color:var(--ink-light);line-height:1.7;" id="contact-position"></p>
+      </div>
+      <div style="margin-bottom:2.5rem;">
+        <p style="font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;">Department</p>
+        <p style="font-size:.95rem;color:var(--ink-light);line-height:1.7;" id="contact-dept"></p>
+      </div>
+      <div style="margin-bottom:2.5rem;">
+        <p style="font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;">Address</p>
+        <p style="font-size:.95rem;color:var(--ink-light);line-height:1.7;" id="contact-address"></p>
+      </div>
+      <div style="margin-bottom:2.5rem;">
+        <p style="font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;">Institutional</p>
+        <p style="font-size:.95rem;color:var(--ink-light);line-height:1.7;">
+          <a id="contact-inst-link" href="#"></a><br>
+          <a id="contact-dept-link" href="#"></a>
+        </p>
+      </div>
+      <div>
+        <p style="font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;">Office Hours</p>
+        <p style="font-size:.95rem;color:var(--ink-light);line-height:1.7;" id="contact-hours"></p>
+      </div>
+    </div>
+
+    <div>
+      <h2 style="font-family:var(--serif);font-size:1.8rem;font-weight:300;margin-bottom:2rem;color:var(--ink);">Send a Message</h2>
+      <div class="contact-form-group">
+        <label>Full name</label>
+        <input type="text" placeholder="Your name" />
+      </div>
+      <div class="contact-form-group">
+        <label>Email address</label>
+        <input type="email" placeholder="your@email.com" />
+      </div>
+      <div class="contact-form-group">
+        <label>Subject</label>
+        <input type="text" placeholder="e.g. Exam query / Research collaboration" />
+      </div>
+      <div class="contact-form-group">
+        <label>Message</label>
+        <textarea placeholder="Your message..."></textarea>
+      </div>
+      <button class="btn btn-solid" onclick="
+        this.textContent='Message sent ✓';
+        this.style.background='#2a7a4b';
+        this.style.borderColor='#2a7a4b';
+        this.disabled=true;">Send Message</button>
+      <p style="font-size:.8rem;color:var(--ink-muted);margin-top:1rem;">
+        To activate form delivery, connect a free <a href="https://formspree.io" target="_blank">Formspree</a> account and set the action URL in this page.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name"></span>
+  <span class="footer-copy"></span>
+</footer>
+
+<script src="js/render.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

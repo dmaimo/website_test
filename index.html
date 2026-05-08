@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dario Maimone Ansaldo Patti — Associate Professor of Public Economics</title>
+  <meta name="description" content="Academic website of Dario Maimone Ansaldo Patti, Associate Professor of Public Economics at the University of Messina." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-page="home" class="loading">
+
+<nav>
+  <a class="nav-logo" href="index.html"></a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li class="nav-item"><a href="index.html">Home</a></li>
+    <li class="nav-item">
+      <a href="research.html">Research</a>
+      <div class="dropdown">
+        <a href="research.html#publications">Publications</a>
+        <a href="research.html#progress">Works in Progress</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="teaching.html">Teaching</a>
+      <div class="dropdown">
+        <a href="teaching.html#undergraduate">Undergraduate</a>
+        <a href="teaching.html#postgraduate">Postgraduate</a>
+        <a href="teaching.html#banking">Banking &amp; Finance</a>
+        <a href="teaching.html#phd">PhD</a>
+        <a href="teaching.html#exams">Exams</a>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="resources.html">Resources</a>
+      <div class="dropdown">
+        <a href="resources.html#data">Data</a>
+        <a href="resources.html#stata">Stata</a>
+        <a href="resources.html#latex">LaTeX</a>
+      </div>
+    </li>
+    <li class="nav-item"><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-text fade-in">
+    <p class="hero-eyebrow" id="hero-eyebrow"></p>
+    <h1><span id="hero-headline"></span><br><em id="hero-headline-em"></em></h1>
+    <p class="hero-subtitle" id="hero-subtitle"></p>
+    <p class="hero-bio" id="hero-bio1"></p>
+    <p class="hero-bio" id="hero-bio2"></p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem;">
+      <a href="research.html" class="btn btn-solid">View Research</a>
+      <a href="contact.html" class="btn">Contact Me</a>
+    </div>
+  </div>
+  <aside class="hero-aside fade-in fade-in-d2">
+    <div class="contact-card">
+      <h3>Contact &amp; Affiliation</h3>
+      <div class="contact-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <div id="hero-address"></div>
+      </div>
+      <div class="contact-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <div><a href="contact.html">Write via contact form</a></div>
+      </div>
+      <div class="contact-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+        <div><a id="hero-website" href="#"></a></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<hr class="divider" />
+
+<section class="section">
+  <div class="section-header">
+    <span class="section-label">Research</span>
+    <h2 class="section-title">Recent Work</h2>
+    <span class="section-rule"></span>
+    <a href="research.html" class="btn" style="white-space:nowrap">All Publications →</a>
+  </div>
+  <div class="card-grid" id="featured-research"></div>
+</section>
+
+<hr class="divider" />
+
+<section class="section">
+  <div class="section-header">
+    <span class="section-label">Teaching</span>
+    <h2 class="section-title">Current Courses</h2>
+    <span class="section-rule"></span>
+    <a href="teaching.html" class="btn" style="white-space:nowrap">All Courses →</a>
+  </div>
+  <div class="card-grid" id="featured-teaching"></div>
+</section>
+
+<footer>
+  <span class="footer-name"></span>
+  <span class="footer-copy"></span>
+</footer>
+
+<script src="js/render.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

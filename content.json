@@ -1,0 +1,212 @@
+{
+  "meta": {
+    "name": "Dario Maimone Ansaldo Patti",
+    "title": "Associate Professor of Public Economics",
+    "university": "University of Messina",
+    "year": "2025"
+  },
+  "home": {
+    "eyebrow": "Associate Professor · University of Messina",
+    "headline": "Public Economics,",
+    "headline_em": "Research & Teaching",
+    "subtitle": "Department of Economics — Università degli Studi di Messina",
+    "bio1": "I am Associate Professor of Public Economics in the Department of Economics at the University of Messina, Italy. After graduating in Law from the University of Messina, I was awarded an M.Sc. in Economics from the University of York (UK), a PhD in Economics and Institutions from the University of Messina, and a PhD in Economics from the University of Essex (UK).",
+    "bio2": "My research interests span public economics, regional economics, spatial econometrics, innovation and technology policy, and applied microeconometrics. In these pages you will find information about my research and teaching activities.",
+    "address": "Department of Economics\nUniversità degli Studi di Messina\nVia dei Verdi, 75 — 98122 Messina, Italy",
+    "website_label": "www.unime.it",
+    "website_url": "http://www.unime.it"
+  },
+  "research": {
+    "intro": "My research spans public economics, regional and spatial economics, innovation and technology policy, and applied microeconometrics.",
+    "publications": [
+      {
+        "id": "pub1",
+        "year": "2024",
+        "title": "Political Concentration, the Replacement Effect, and Total Factor Productivity",
+        "authors": "Maimone Ansaldo Patti, D.",
+        "journal": "Chapter 7 in The Politics of Innovation",
+        "abstract_url": "",
+        "pdf_url": ""
+      },
+      {
+        "id": "pub2",
+        "year": "2023",
+        "title": "Spatial Dependence in Regional Innovation: A SARAR IV Approach",
+        "authors": "Maimone Ansaldo Patti, D.",
+        "journal": "Working paper",
+        "abstract_url": "",
+        "pdf_url": ""
+      },
+      {
+        "id": "pub3",
+        "year": "2022",
+        "title": "Fiscal Policy and Regional Convergence: Evidence from Italian NUTS2 Regions",
+        "authors": "Maimone Ansaldo Patti, D.",
+        "journal": "Working paper",
+        "abstract_url": "",
+        "pdf_url": ""
+      }
+    ],
+    "wip": [
+      {
+        "id": "wip1",
+        "tag": "Regional Economics",
+        "title": "NUTS2 Regional Panel Dataset (Eurostat × ARDECO)",
+        "description": "Construction of a NUTS2-level panel integrating Eurostat structural indicators with ARDECO regional accounts series (SNPCNP, SNMTN, PASSEN) for a long-run analysis of European regional productivity.",
+        "status": "In preparation"
+      },
+      {
+        "id": "wip2",
+        "tag": "Innovation Geography",
+        "title": "Patent Inventor Location and NUTS2 Assignment",
+        "description": "Geospatial pipeline linking PATSTAT patent inventor addresses to NUTS2 regions via postcode parsing, ONSPD crosswalk matching, and bulk NUTS code reclassification for the 2021 revision.",
+        "status": "In preparation"
+      },
+      {
+        "id": "wip3",
+        "tag": "Inequality & Poverty",
+        "title": "Inequality, Poverty, and Redistributive Policy",
+        "description": "Empirical analysis of inequality and poverty dynamics across Italian regions, with a focus on the distributional effects of fiscal transfers and public expenditure.",
+        "status": "In preparation"
+      }
+    ]
+  },
+  "teaching": {
+    "intro": "A full list of current and recent teaching at the University of Messina, at undergraduate, postgraduate, and doctoral level.",
+    "groups": [
+      {
+        "id": "undergraduate",
+        "title": "Undergraduate",
+        "courses": [
+          { "name": "Microeconomics", "sub": "Economia e Management, DEMS", "badge": "Bachelor's" },
+          { "name": "Public Economics", "sub": "Economia e Management, DEMS", "badge": "Bachelor's" },
+          { "name": "Scienza delle Finanze", "sub": "Economia e Management, DEMS", "badge": "Bachelor's" },
+          { "name": "Public Policies", "sub": "Scienze Politiche", "badge": "Bachelor's" },
+          { "name": "FOQUIM — Formazione e Qualificazione dei Mercati", "sub": "", "badge": "Bachelor's" }
+        ]
+      },
+      {
+        "id": "postgraduate",
+        "title": "Postgraduate (Master's / Magistrale)",
+        "courses": [
+          { "name": "International Public Policies", "sub": "LM in Economics, DEMS", "badge": "Master's" }
+        ]
+      },
+      {
+        "id": "banking",
+        "title": "First-Level Master's in Banking & Finance",
+        "courses": [
+          { "name": "Applied Financial Econometrics", "sub": "", "badge": "Master's 1°" },
+          { "name": "Advanced Financial Econometrics", "sub": "", "badge": "Master's 1°" },
+          { "name": "Financial Econometrics", "sub": "", "badge": "Master's 1°" },
+          { "name": "Investment Management", "sub": "", "badge": "Master's 1°" }
+        ]
+      },
+      {
+        "id": "phd",
+        "title": "PhD Programme",
+        "courses": [
+          { "name": "Statistical and Econometric Models for Policy Analysis", "sub": "PhD in Economics and Institutions", "badge": "Doctoral" }
+        ]
+      }
+    ],
+    "exams_text": "Exam dates are published on the official UNIME ESSE3 portal and on the departmental notice board. Students should register via ESSE3 within the deadlines indicated for each session. For queries about exam registration, office hours, or programme content, please use the contact form or write to my institutional email."
+  },
+  "resources": {
+    "intro": "Curated resources for students and researchers: datasets, Stata code, and LaTeX templates.",
+    "sections": [
+      {
+        "id": "data",
+        "label": "01",
+        "title": "Data",
+        "blocks": [
+          {
+            "title": "Eurostat Regional Data",
+            "description": "Official EU regional statistics at NUTS1/NUTS2 level, covering GDP, employment, population, and R&D expenditure.",
+            "links": [
+              { "text": "Eurostat Regions Portal", "url": "https://ec.europa.eu/eurostat/web/regions" },
+              { "text": "Eurostat Data Browser", "url": "https://ec.europa.eu/eurostat/databrowser/" }
+            ]
+          },
+          {
+            "title": "ARDECO Database",
+            "description": "Annual Regional Database of the European Commission (DG REGIO), providing long-run NUTS2 series for regional accounts.",
+            "links": [
+              { "text": "ARDECO Online", "url": "https://urban.jrc.ec.europa.eu/ardeco/" }
+            ]
+          },
+          {
+            "title": "PATSTAT",
+            "description": "Worldwide Patent Statistical Database (EPO). Used for patent inventor geocoding and NUTS2 assignment.",
+            "links": [
+              { "text": "EPO PATSTAT", "url": "https://www.epo.org/searching-for-patents/business/patstat.html" }
+            ]
+          },
+          {
+            "title": "Italian Regional Data",
+            "description": "National sources for Italian regional analysis.",
+            "links": [
+              { "text": "ISTAT — National Institute of Statistics", "url": "https://www.istat.it" },
+              { "text": "Banca d'Italia", "url": "https://www.bancaditalia.it" },
+              { "text": "SVIMEZ — Southern Italy", "url": "https://www.svimez.info" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "stata",
+        "label": "02",
+        "title": "Stata",
+        "blocks": [
+          {
+            "title": "Spatial Econometrics",
+            "description": "Code and notes for spatial regression models, including SAR, SEM, and SARAR IV estimation using the Kelejian–Prucha approach.",
+            "links": []
+          },
+          {
+            "title": "Panel Econometrics",
+            "description": "Code for fixed effects, random effects, GMM, and dynamic panel models. Includes publication-quality table output via esttab.",
+            "links": []
+          },
+          {
+            "title": "Teaching Datasets",
+            "description": "Datasets used in Financial Econometrics and Applied courses, suitable for replication exercises.",
+            "links": []
+          }
+        ]
+      },
+      {
+        "id": "latex",
+        "label": "03",
+        "title": "LaTeX",
+        "blocks": [
+          {
+            "title": "UniME Beamer Theme",
+            "description": "Custom Beamer presentation theme for the University of Messina (beamerthemeUniME), installable as a local texmf tree entry for use across all projects.",
+            "links": []
+          },
+          {
+            "title": "TikZ Diagrams",
+            "description": "Precision economic diagrams built in TikZ for lectures: supply & demand, perfect competition, Solow-Swan growth model, Gini/Lorenz curves.",
+            "links": []
+          },
+          {
+            "title": "Regression Tables",
+            "description": "LaTeX table templates for publication-quality regression output, designed to match journal standards (AER, JEL style). Stata → LaTeX via esttab.",
+            "links": []
+          }
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "position": "Associate Professor of Public Economics",
+    "dept_full": "Department of Economics (DEMS)\nUniversità degli Studi di Messina",
+    "address": "Via dei Verdi, 75\n98122 Messina\nItaly",
+    "institution_label": "www.unime.it",
+    "institution_url": "http://www.unime.it",
+    "dept_label": "DEMS — Department of Economics",
+    "dept_url": "http://www.unime.it/it/dipartimenti/economia",
+    "office_hours": "Please check the departmental notice board or contact me by email to arrange a meeting."
+  }
+}
