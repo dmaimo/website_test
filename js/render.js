@@ -146,12 +146,14 @@ function renderTeaching(data) {
     </div>`).join('');
 }
 
-// ── RESOURCES ────────────────────────────────────────────────
+// ── RESOURCES (preview on resources.html) ────────────────────
 function renderResources(data) {
   setText('#resources-intro', data.resources.intro);
 
   const container = document.querySelector('#resources-sections');
   if (!container) return;
+
+  const PREVIEW = 3; // blocks shown per section before "More"
 
   container.innerHTML = data.resources.sections.map((sec, i) => `
     <div ${i > 0 ? 'style="margin-top:4rem"' : ''}>
@@ -159,20 +161,48 @@ function renderResources(data) {
         <span class="section-label">${esc(sec.label)}</span>
         <h2 class="section-title">${esc(sec.title)}</h2>
         <span class="section-rule"></span>
+        <a href="${esc(sec.id)}.html" class="btn" style="white-space:nowrap;font-size:.72rem;">More →</a>
       </div>
       <div class="resource-grid">
-        ${sec.blocks.map(b => `
+        ${sec.blocks.slice(0, PREVIEW).map(b => `
         <div class="resource-block">
           <h3>${esc(b.title)}</h3>
           <p>${esc(b.description)}</p>
-          ${b.links.length ? `<ul>${b.links.map(l =>
+          ${b.links.length ? `<ul>${b.links.slice(0, 4).map(l =>
             `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.text)}</a></li>`
-          ).join('')}</ul>` : ''}
+          ).join('')}${b.links.length > 4 ? `<li><a href="${esc(sec.id)}.html">more →</a></li>` : ''}</ul>` : ''}
         </div>`).join('')}
       </div>
     </div>
     ${i < data.resources.sections.length - 1 ? '<hr class="divider" style="margin:4rem 0">' : ''}`
   ).join('');
+}
+
+// ── RESOURCE DETAIL PAGE (data.html / stata.html / latex.html)
+function renderResourceDetail(data) {
+  const pageId = document.body.dataset.resourceId;
+  const sec = data.resources.sections.find(s => s.id === pageId);
+  if (!sec) return;
+
+  const eyebrow = document.querySelector('.page-eyebrow');
+  const title   = document.querySelector('.page-title');
+  if (eyebrow) eyebrow.textContent = 'Resources — ' + sec.title;
+  if (title)   title.innerHTML = esc(sec.title) + '<br><em>Full List</em>';
+
+  const container = document.getElementById('resource-detail-sections');
+  if (!container) return;
+
+  container.innerHTML = sec.blocks.map(b => {
+    const anchorId = b.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    return `
+    <div class="resource-full-block" id="${anchorId}">
+      <h3 class="resource-full-title">${esc(b.title)}</h3>
+      <p class="resource-full-desc">${esc(b.description)}</p>
+      ${b.links.length ? `<ul class="resource-full-links">${b.links.map(l =>
+        `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.text)}</a></li>`
+      ).join('')}</ul>` : '<p style="font-size:.85rem;color:var(--ink-muted);font-style:italic;">Links coming soon.</p>'}
+    </div>`;
+  }).join('<hr class="divider" style="margin:2.5rem 0">');
 }
 
 // ── CONTACT ──────────────────────────────────────────────────
@@ -199,7 +229,7 @@ function setHTML(sel, val) {
 }
 
 // ── Boot ──────────────────────────────────────────────────────
-const renderers = { home: renderHome, research: renderResearch, teaching: renderTeaching, resources: renderResources, contact: renderContact };
+const renderers = { home: renderHome, research: renderResearch, teaching: renderTeaching, resources: renderResources, contact: renderContact, resource_detail: renderResourceDetail };
 
 document.addEventListener('DOMContentLoaded', async () => {
   try {
