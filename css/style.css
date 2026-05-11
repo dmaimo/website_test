@@ -133,6 +133,17 @@ footer { border-top: 1px solid var(--rule); padding: 2.5rem clamp(1.5rem,5vw,4re
 
 .divider { border: none; border-top: 1px solid var(--rule); margin: 0 clamp(1.5rem,5vw,4rem); }
 
+/* Resource detail pages */
+.resource-full-block { padding: 2rem 0; }
+.resource-full-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--ink); margin-bottom: .6rem; }
+.resource-full-desc { font-size: .92rem; color: var(--ink-light); margin-bottom: 1.2rem; max-width: 680px; line-height: 1.8; }
+.resource-full-links { list-style: none; columns: 2; gap: 2rem; }
+.resource-full-links li { padding: .3rem 0; break-inside: avoid; font-size: .88rem; color: var(--ink-light); }
+.resource-full-links li::before { content: '→ '; color: var(--gold); }
+.resource-full-links a { color: var(--ink-light); }
+.resource-full-links a:hover { color: var(--gold); }
+@media (max-width: 700px) { .resource-full-links { columns: 1; } }
+
 /* Loading state */
 .loading { opacity: 0; transition: opacity .4s; }
 .loaded { opacity: 1; }
