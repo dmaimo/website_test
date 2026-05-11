@@ -170,7 +170,7 @@ function renderResources(data) {
           <p>${esc(b.description)}</p>
           ${b.links.length ? `<ul>${b.links.slice(0, 4).map(l =>
             `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.text)}</a></li>`
-          ).join('')}${b.links.length > 4 ? `<li><a href="${esc(sec.id)}.html">more →</a></li>` : ''}</ul>` : ''}
+          ).join('')}</ul>` : ''}
         </div>`).join('')}
       </div>
     </div>
