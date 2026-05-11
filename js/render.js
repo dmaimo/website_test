@@ -79,19 +79,35 @@ function renderResearch(data) {
 
   const pubList = document.querySelector('#pub-list');
   if (pubList) {
-    pubList.innerHTML = data.research.publications.map(p => `
-      <li class="pub-item">
-        <span class="pub-year">${esc(p.year)}</span>
-        <div>
-          <p class="pub-title">${esc(p.title)}</p>
-          <p class="pub-authors">${esc(p.authors)}</p>
-          <p class="pub-journal">${esc(p.journal)}</p>
-          ${(p.abstract_url || p.pdf_url) ? `<div class="pub-links">
-            ${p.abstract_url ? `<a href="${esc(p.abstract_url)}" target="_blank">Abstract</a>` : ''}
-            ${p.pdf_url      ? `<a href="${esc(p.pdf_url)}" target="_blank">PDF</a>` : ''}
-          </div>` : ''}
-        </div>
-      </li>`).join('');
+    // Group by category
+    const order = ['Books', 'Chapters in Books', 'Articles in Refereed Journals'];
+    const groups = {};
+    data.research.publications.forEach(p => {
+      const cat = p.category || 'Other';
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(p);
+    });
+
+    let html = '';
+    order.forEach(cat => {
+      if (!groups[cat] || groups[cat].length === 0) return;
+      html += `<li class="pub-category-header">${esc(cat)}</li>`;
+      groups[cat].forEach(p => {
+        html += `<li class="pub-item">
+          <span class="pub-year">${esc(p.year)}</span>
+          <div>
+            <p class="pub-title">${esc(p.title)}</p>
+            <p class="pub-authors">${esc(p.authors)}</p>
+            <p class="pub-journal">${esc(p.journal)}</p>
+            <div class="pub-links">
+              ${p.pdf_url         ? `<a href="${esc(p.pdf_url)}" target="_blank" rel="noopener">[pdf]</a>` : '<span class="pub-link-placeholder">[pdf]</span>'}
+              ${p.replication_url ? `<a href="${esc(p.replication_url)}" target="_blank" rel="noopener">[replication]</a>` : '<span class="pub-link-placeholder">[replication]</span>'}
+            </div>
+          </div>
+        </li>`;
+      });
+    });
+    pubList.innerHTML = html;
   }
 
   const wipGrid = document.querySelector('#wip-grid');
@@ -196,4 +212,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.classList.add('loaded');
   }
 });
-
