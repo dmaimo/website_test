@@ -98,7 +98,7 @@ function renderAll() {
     sel.appendChild(ol);
   }
 
-  // Home: news (only entries from the last 12 months are shown)
+  // Home: news — the 4 most recent entries from the last 12 months
   const newsBox = document.getElementById("news-list");
   if (newsBox) {
     const cutoff = new Date();
@@ -106,10 +106,14 @@ function renderAll() {
     const fresh = C.news
       .filter(n => new Date(n.date) >= cutoff)
       .sort((a, b) => new Date(b.date) - new Date(a.date))
-      .slice(0, 5);
+      .slice(0, 4);
     const ul = el("ul");
     if (fresh.length === 0) {
-      ul.appendChild(el("li", null, "No recent announcements."));
+      // nothing from the last 12 months: point to evergreen pages instead
+      ul.appendChild(el("li", null,
+        '<a href="https://economics-management-statistics.phd.unime.it/" target="_blank" rel="noopener">PhD in Economics, Management and Statistics</a> — programme, calls and admissions.'));
+      ul.appendChild(el("li", null,
+        '<a href="research.html#current">Current research</a> — work in progress and papers under review.'));
     } else {
       fresh.forEach(n => {
         const li = el("li");
