@@ -35,9 +35,29 @@
     <nav class="main-nav" id="mainnav">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="research.html">Research</a></li>
-        <li><a href="teaching.html" aria-current="page">Teaching</a></li>
-        <li><a href="resources.html">Resources</a></li>
+        <li class="has-sub"><a href="research.html">Research</a>
+          <ul class="sub-menu">
+            <li><a href="research.html#books">Books</a></li>
+            <li><a href="research.html#articles">Articles</a></li>
+            <li><a href="research.html#chapters">Chapters in books</a></li>
+            <li><a href="research.html#current">Current research</a></li>
+          </ul>
+        </li>
+        <li class="has-sub"><a href="teaching.html" aria-current="page">Teaching</a>
+          <ul class="sub-menu">
+            <li><a href="courses/international-public-policy.html">International Public Policy</a></li>
+            <li><a href="courses/advanced-financial-econometrics.html">Advanced Financial Econometrics</a></li>
+            <li><a href="courses/quantitative-techniques.html">Quantitative Techniques</a></li>
+            <li><a href="teaching.html#past-courses">Past courses</a></li>
+          </ul>
+        </li>
+        <li class="has-sub"><a href="resources.html">Resources</a>
+          <ul class="sub-menu">
+            <li><a href="resources.html#data">Data</a></li>
+            <li><a href="resources.html#stata">Stata</a></li>
+            <li><a href="resources.html#latex">LaTeX</a></li>
+          </ul>
+        </li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
@@ -55,10 +75,10 @@
   <div class="wrap">
     <p class="lede">Lecture notes, slides and exam information are distributed through the University's e-learning platform and, where indicated, through the course pages below. For office hours and supervision, please get in touch by email.</p>
 
-    <h3>Current courses</h3>
+    <h3 id="current-courses">Current courses</h3>
     <div id="courses-current" data-prerendered><ul class="course-list"><li class="course"><span class="cname"><a href="courses/international-public-policy.html">International Public Policy</a></span><span class="tags"><span>Graduate</span><span>EN</span></span></li><li class="course"><span class="cname"><a href="courses/advanced-financial-econometrics.html">Advanced Financial Econometrics</a></span><span class="tags"><span>Graduate</span><span>EN</span></span></li><li class="course"><span class="cname"><a href="courses/quantitative-techniques.html">Quantitative Techniques</a></span><span class="tags"><span>PhD</span><span>EN</span></span></li></ul></div>
 
-    <h3>Past courses</h3>
+    <h3 id="past-courses">Past courses</h3>
     <div id="courses-past" data-prerendered><ul class="course-list"><li class="course"><span class="cname">Public Economics</span><span class="tags"><span>Undergraduate</span><span>EN</span></span></li><li class="course"><span class="cname">Scienza delle Finanze</span><span class="tags"><span>Undergraduate</span><span>IT</span></span></li><li class="course"><span class="cname">Public Policies</span><span class="tags"><span>Undergraduate</span><span>EN</span></span></li><li class="course"><span class="cname">Applied Financial Econometrics</span><span class="tags"><span>Graduate</span><span>EN</span></span></li><li class="course"><span class="cname">Microeconomics</span><span class="tags"><span>Undergraduate</span><span>EN</span></span></li></ul></div>
   </div>
 </section>

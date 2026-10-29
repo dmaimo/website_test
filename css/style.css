@@ -113,6 +113,35 @@ nav.main-nav a[aria-current="page"] {
   padding-bottom: 2px;
 }
 
+/* dropdowns */
+nav.main-nav li.has-sub { position: relative; }
+nav.main-nav .sub-menu {
+  display: block;
+  position: absolute; top: 100%; left: -0.9rem; z-index: 30;
+  min-width: 15rem; margin-top: 0.55rem;
+  padding: 0.45rem 0;
+  background: var(--paper);
+  border: 1px solid var(--line); border-radius: 6px;
+  box-shadow: 0 10px 28px rgba(22,35,58,0.12);
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity .15s ease, transform .15s ease, visibility 0s linear .15s;
+}
+/* invisible bridge so the pointer can travel from the label to the menu */
+nav.main-nav .sub-menu::before { content: ""; position: absolute; left: 0; right: 0; top: -0.7rem; height: 0.7rem; }
+nav.main-nav li.has-sub:hover > .sub-menu,
+nav.main-nav li.has-sub:focus-within > .sub-menu {
+  opacity: 1; visibility: visible; transform: none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+nav.main-nav .sub-menu li { display: block; }
+nav.main-nav .sub-menu a {
+  display: block; padding: 0.42rem 0.95rem;
+  text-transform: none; letter-spacing: 0; font-weight: 400;
+  font-size: 0.93rem; color: var(--ink); white-space: nowrap;
+}
+nav.main-nav .sub-menu a:hover { background: var(--paper-deep); color: var(--sea); }
+h3[id] { scroll-margin-top: calc(var(--header-h, 64px) + 24px); }
+
 .nav-toggle {
   display: none;
   background: none;
@@ -138,6 +167,17 @@ nav.main-nav a[aria-current="page"] {
   }
   nav.main-nav.open { display: block; }
   nav.main-nav ul { flex-direction: column; gap: 0.85rem; }
+  nav.main-nav { max-height: calc(100vh - 64px); overflow-y: auto; }
+  /* on phones the sub-items are simply listed under each section */
+  nav.main-nav .sub-menu {
+    position: static; opacity: 1; visibility: visible; transform: none;
+    border: none; box-shadow: none; background: none;
+    min-width: 0; margin: 0.35rem 0 0; padding: 0 0 0 0.9rem;
+    border-left: 2px solid var(--line); gap: 0.1rem;
+  }
+  nav.main-nav .sub-menu::before { display: none; }
+  nav.main-nav .sub-menu a { padding: 0.25rem 0; font-size: 0.9rem; color: var(--ink-soft); white-space: normal; }
+  nav.main-nav .sub-menu a:hover { background: none; }
 }
 
 /* ---------- hero with photo + graticule ---------- */
