@@ -85,6 +85,9 @@ function renderList(targetId, items, mapper) {
 function renderAll() {
   if (typeof SITE_CONTENT === "undefined") return;
   const C = SITE_CONTENT;
+  // Pages ship with a pre-rendered copy of the content (for search engines and
+  // no-JS visitors, see tools/prerender.js). Clear it and render fresh data.
+  document.querySelectorAll("[data-prerendered]").forEach(n => { n.innerHTML = ""; });
 
   // Home: selected publications
   const sel = document.getElementById("selected-pubs");

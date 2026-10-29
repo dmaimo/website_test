@@ -1,0 +1,40 @@
+name: Pre-render content
+
+# Keeps the static HTML in sync with data/content.js (e.g. after edits
+# made through admin.html), so search engines always see current content.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/content.js"
+      - "js/site.js"
+      - "*.html"
+      - "tools/prerender.js"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prerender
+  cancel-in-progress: true
+
+jobs:
+  prerender:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-save playwright@1.47.2
+      - run: npx playwright install --with-deps chromium
+      - run: node tools/prerender.js
+      - name: Commit if changed
+        run: |
+          if git diff --quiet; then echo "No changes"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Pre-render content [skip ci]"
+          git push
