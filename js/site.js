@@ -173,13 +173,29 @@ function renderRoutines(targetId, items) {
   const target = document.getElementById(targetId);
   if (!target || !items) return;
   const dl = el("dl", "routine-list");
-  items.forEach(r => {
-    const dt = el("dt", null,
+  const SHOW = 5;
+  items.forEach((r, i) => {
+    const dt = el("dt", i >= SHOW ? "extra" : null,
       r.url ? '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.name) + "</a>" : esc(r.name));
     dl.appendChild(dt);
-    dl.appendChild(el("dd", null, r.desc || ""));
+    dl.appendChild(el("dd", i >= SHOW ? "extra" : null, r.desc || ""));
   });
   target.appendChild(dl);
+  if (items.length > SHOW) {
+    dl.classList.add("collapsed");
+    const btn = el("button", "toggle-more");
+    btn.type = "button";
+    const label = () => dl.classList.contains("collapsed")
+      ? "SHOW ALL " + items.length + " ROUTINES ↓" : "SHOW FEWER ↑";
+    btn.textContent = label();
+    btn.setAttribute("aria-expanded", "false");
+    btn.addEventListener("click", () => {
+      dl.classList.toggle("collapsed");
+      btn.textContent = label();
+      btn.setAttribute("aria-expanded", String(!dl.classList.contains("collapsed")));
+    });
+    target.appendChild(btn);
+  }
 }
 
 function renderCourses(targetId, courses) {
@@ -206,3 +222,27 @@ function formatDate(iso) {
   if (isNaN(d)) return iso;
   return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
 }
+
+
+/* Resources: highlight the section in view + item counts */
+document.addEventListener("DOMContentLoaded", () => setTimeout(function () {
+  const bar = document.querySelector(".subnav-bar");
+  if (!bar) return;
+  const hdr = document.querySelector(".site-header");
+  if (hdr) document.documentElement.style.setProperty("--header-h", hdr.offsetHeight + "px");
+  const count = (sel) => document.querySelectorAll(sel).length;
+  const set = (k, n) => { const s = bar.querySelector('[data-count="' + k + '"]'); if (s && n) s.textContent = "· " + n; };
+  set("res-list", count("#res-list .res-card"));
+  set("stata", count("#stata .res-card, #stata dt"));
+  set("latex", count("#latex .res-card"));
+  const links = [...bar.querySelectorAll("a")];
+  const secs = links.map(a => document.querySelector(a.getAttribute("href")));
+  const onScroll = () => {
+    const y = window.scrollY + (hdr ? hdr.offsetHeight : 64) + 80;
+    let idx = 0;
+    secs.forEach((s, i) => { if (s && s.offsetTop <= y) idx = i; });
+    links.forEach((a, i) => a.classList.toggle("active", i === idx));
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+}, 0));

@@ -20,9 +20,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -51,12 +49,15 @@
 <div class="wrap page-title">
   <p class="eyebrow">Resources</p>
   <h1>Resources for research in politics and economics</h1>
-  <nav class="subnav" aria-label="Resource sections">
-    <a href="#data">DATA</a>
-    <a href="#stata">STATA</a>
-    <a href="#latex">LATEX</a>
-  </nav>
 </div>
+
+<nav class="subnav-bar" aria-label="Resource sections">
+  <div class="wrap subnav">
+    <a href="#data">DATA <span class="n" data-count="res-list"></span></a>
+    <a href="#stata">STATA <span class="n" data-count="stata"></span></a>
+    <a href="#latex">LATEX <span class="n" data-count="latex"></span></a>
+  </div>
+</nav>
 
 <section class="block" id="data">
   <div class="wrap">
