@@ -259,7 +259,6 @@ const SITE_CONTENT = {
       { name: "Scienza delle Finanze", level: "Undergraduate", lang: "IT", page: "" },
       { name: "Public Policies", level: "Undergraduate", lang: "EN", page: "" },
       { name: "Applied Financial Econometrics", level: "Graduate", lang: "EN", page: "" },
-      { name: "Financial Econometrics", level: "Graduate", lang: "EN", page: "" },
       { name: "Microeconomics", level: "Undergraduate", lang: "EN", page: "" }
     ]
   },
