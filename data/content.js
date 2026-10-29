@@ -93,7 +93,7 @@ const SITE_CONTENT = {
         id: "political-systems-fdi-growth-inequality",
         title: "Do Political Systems Affect Economic Outcomes? The Geography of Inward FDI and Its Relationships with Growth and Inequality",
         authors: 'with <a class="author-link" href="https://www.fox.temple.edu/directory/ram-mudambi-rmudambi" target="_blank" rel="noopener">R. Mudambi</a> and P. Navarra',
-        outlet: "Journal of International Business Studies, online first",
+        outlet: "Journal of International Business Studies, vol. 57, pp. 719–742",
         year: 2026,
         link: "https://link.springer.com/article/10.1057/s41267-026-00849-8",
         dataLink: "https://figshare.com/articles/dataset/Do_political_systems_affect_economic_outcomes_The_geography_of_inward_FDI_and_its_relationships_with_growth_and_inequality_with_R_Mudambi_P_Navarra_/31048825"
