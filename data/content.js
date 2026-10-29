@@ -248,12 +248,6 @@ const SITE_CONTENT = {
         page: "courses/advanced-financial-econometrics.html"
       },
       {
-        name: "Data Analysis for Research",
-        level: "Graduate",
-        lang: "EN",
-        page: "courses/data-analysis-for-research.html"
-      },
-      {
         name: "Quantitative Techniques",
         level: "PhD",
         lang: "EN",
