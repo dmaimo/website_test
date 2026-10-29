@@ -98,76 +98,63 @@ function renderAll() {
     sel.appendChild(ol);
   }
 
-  // Home: news — the 4 most recent entries from the last 12 months;
-  // "All news" below the box expands the full archive, grouped by year.
+  // News: home box shows the 4 most recent entries from the last 12 months,
+  // with a link to news.html, which lists every entry grouped by year.
+  const byDate = (a, b) => new Date(b.date) - new Date(a.date);
+  const allNews = (C.news || []).slice().sort(byDate);
+  const newsItem = n => {
+    const li = el("li");
+    li.appendChild(el("span", "news-date", esc(formatDate(n.date))));
+    li.appendChild(document.createTextNode(n.text));
+    if (n.link) {
+      li.appendChild(document.createTextNode(" "));
+      const a = document.createElement("a");
+      a.href = n.link; a.target = "_blank"; a.rel = "noopener";
+      a.className = "news-link";
+      a.textContent = (n.linkLabel || "More") + " →";
+      li.appendChild(a);
+    }
+    return li;
+  };
+
   const newsBox = document.getElementById("news-list");
   if (newsBox) {
-    const byDate = (a, b) => new Date(b.date) - new Date(a.date);
-    const all = (C.news || []).slice().sort(byDate);
     const cutoff = new Date();
     cutoff.setFullYear(cutoff.getFullYear() - 1);
-    const fresh = all.filter(n => new Date(n.date) >= cutoff).slice(0, 4);
-
-    const newsItem = n => {
-      const li = el("li");
-      li.appendChild(el("span", "news-date", esc(formatDate(n.date))));
-      li.appendChild(document.createTextNode(n.text));
-      if (n.link) {
-        li.appendChild(document.createTextNode(" "));
-        const a = document.createElement("a");
-        a.href = n.link; a.target = "_blank"; a.rel = "noopener";
-        a.className = "news-link";
-        a.textContent = (n.linkLabel || "More") + " →";
-        li.appendChild(a);
-      }
-      return li;
-    };
-
-    // latest view
-    const latest = el("ul", "news-latest");
+    const fresh = allNews.filter(n => new Date(n.date) >= cutoff).slice(0, 4);
+    const ul = el("ul");
     if (fresh.length === 0) {
       // nothing from the last 12 months: point to evergreen pages instead
-      latest.appendChild(el("li", null,
+      ul.appendChild(el("li", null,
         '<a href="https://economics-management-statistics.phd.unime.it/" target="_blank" rel="noopener">PhD in Economics, Management and Statistics</a> — programme, calls and admissions.'));
-      latest.appendChild(el("li", null,
+      ul.appendChild(el("li", null,
         '<a href="research.html#current">Current research</a> — work in progress and papers under review.'));
     } else {
-      fresh.forEach(n => latest.appendChild(newsItem(n)));
+      fresh.forEach(n => ul.appendChild(newsItem(n)));
     }
-    newsBox.appendChild(latest);
-
-    // archive view (hidden until requested)
-    if (all.length) {
-      const archive = el("div", "news-archive");
-      archive.id = "news-archive";
-      archive.hidden = true;
-      let year = null, ul = null;
-      all.forEach(n => {
-        const y = String(n.date).slice(0, 4);
-        if (y !== year) {
-          year = y;
-          archive.appendChild(el("h4", "news-year", esc(y)));
-          ul = el("ul");
-          archive.appendChild(ul);
-        }
-        ul.appendChild(newsItem(n));
-      });
-      newsBox.appendChild(archive);
-
+    newsBox.appendChild(ul);
+    if (allNews.length) {
       const card = newsBox.closest(".side-card") || newsBox;
-      const btn = el("button", "news-toggle");
-      btn.type = "button";
-      btn.setAttribute("aria-controls", "news-archive");
-      const sync = () => {
-        const open = !archive.hidden;
-        latest.hidden = open;
-        btn.textContent = open ? "LATEST NEWS ↑" : "ALL NEWS →";
-        btn.setAttribute("aria-expanded", String(open));
-      };
-      btn.addEventListener("click", () => { archive.hidden = !archive.hidden; sync(); });
-      sync();
-      card.insertAdjacentElement("afterend", btn);
+      const more = el("a", "news-toggle", "ALL NEWS →");
+      more.href = "news.html";
+      card.insertAdjacentElement("afterend", more);
     }
+  }
+
+  const newsAll = document.getElementById("news-all");
+  if (newsAll) {
+    if (!allNews.length) newsAll.appendChild(el("p", "lede", "No news yet."));
+    let year = null, ul = null;
+    allNews.forEach(n => {
+      const y = String(n.date).slice(0, 4);
+      if (y !== year) {
+        year = y;
+        newsAll.appendChild(el("h3", "news-year", esc(y)));
+        ul = el("ul", "news-year-list");
+        newsAll.appendChild(ul);
+      }
+      ul.appendChild(newsItem(n));
+    });
   }
 
   // Research page

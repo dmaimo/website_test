@@ -462,20 +462,24 @@ address a.orcid { font-size: 0.9rem; color: var(--sea); }
   white-space: nowrap;
 }
 
-.news-archive .news-year {
-  font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.14em;
-  color: var(--ink); margin: 1rem 0 0.2rem; padding-bottom: 0.3rem;
-  border-bottom: 1px solid var(--line);
+/* News page */
+.news-page { max-width: var(--w-text); }
+.news-page .news-year:first-child { margin-top: 0; }
+.news-year-list { list-style: none; margin-bottom: 1.6rem; }
+.news-year-list li { padding: 0.7rem 0; border-top: 1px solid var(--line); }
+.news-year-list li:first-child { border-top: none; }
+.news-year-list .news-date {
+  display: block; font-family: var(--font-mono); font-size: 0.74rem;
+  letter-spacing: 0.08em; color: var(--brass);
 }
-.news-archive .news-year:first-child { margin-top: 0; }
-.news-archive ul { list-style: none; }
+.news-year-list a.news-link { font-family: var(--font-mono); font-size: 0.8rem; white-space: nowrap; }
 .news-toggle {
   display: inline-block; margin-top: 0.8rem;
   font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em;
   background: none; border: 1px solid var(--line); border-radius: 999px;
   padding: 0.35rem 0.9rem; color: var(--sea-deep); cursor: pointer;
 }
-.news-toggle:hover { border-color: var(--sea); }
+.news-toggle:hover { border-color: var(--sea); text-decoration: none; }
 
 /* ---------- utilities ---------- */
 
