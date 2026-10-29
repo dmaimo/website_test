@@ -68,6 +68,8 @@
       <ul class="items" id="news-items"></ul>
       <label>Data</label><input id="news-date" type="date">
       <label>Testo</label><textarea id="news-text"></textarea>
+      <label>Link (facoltativo — es. mappa, bando, articolo)</label><input id="news-link" type="url" placeholder="https://...">
+      <label>Testo del link (facoltativo, es. "Map", "Call", "Paper")</label><input id="news-link-label" type="text" placeholder="More">
       <button id="btn-add-news">AGGIUNGI NEWS</button>
     </div>
 
@@ -174,7 +176,7 @@ function renderEditor() {
   ul.innerHTML = "";
   C.news.forEach((n, i) => {
     const li = document.createElement("li");
-    li.innerHTML = `<span><strong>${n.date}</strong> — ${n.text}</span>`;
+    li.innerHTML = `<span><strong>${n.date}</strong> — ${n.text}${n.link ? ' [link]' : ''}</span>`;
     const del = document.createElement("button");
     del.textContent = "X";
     del.onclick = () => { C.news.splice(i, 1); renderEditor(); };
@@ -187,8 +189,11 @@ function renderEditor() {
 $("btn-add-news").addEventListener("click", () => {
   const d = $("news-date").value, t = $("news-text").value.trim();
   if (!d || !t) return;
-  state.content.news.unshift({ date: d, text: t });
-  $("news-text").value = "";
+  const item = { date: d, text: t };
+  const L = $("news-link").value.trim(), LL = $("news-link-label").value.trim();
+  if (L) { item.link = L; if (LL) item.linkLabel = LL; }
+  state.content.news.unshift(item);
+  $("news-text").value = ""; $("news-link").value = ""; $("news-link-label").value = "";
   renderEditor();
 });
 

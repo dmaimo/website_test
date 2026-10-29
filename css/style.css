@@ -457,6 +457,11 @@ a.orcid:hover { color: var(--sea); }
 .orcid-icon { flex: none; }
 address a.orcid { font-size: 0.9rem; color: var(--sea); }
 
+.side-card a.news-link {
+  font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
 /* ---------- utilities ---------- */
 
 .btn {

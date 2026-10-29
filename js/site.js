@@ -119,6 +119,14 @@ function renderAll() {
         const li = el("li");
         li.appendChild(el("span", "news-date", esc(formatDate(n.date))));
         li.appendChild(document.createTextNode(n.text));
+        if (n.link) {
+          li.appendChild(document.createTextNode(" "));
+          const a = document.createElement("a");
+          a.href = n.link; a.target = "_blank"; a.rel = "noopener";
+          a.className = "news-link";
+          a.textContent = (n.linkLabel || "More") + " →";
+          li.appendChild(a);
+        }
         ul.appendChild(li);
       });
     }

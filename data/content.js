@@ -7,7 +7,13 @@ const SITE_CONTENT = {
 
   news: [
     {
-      date: "2026-07-01",
+      date: "2026-10-29",
+      text: "Welcome meeting for the new PhD students in Economics, Management and Statistics: 5 November, 11:00, Room 12, second floor, Building C, Department of Economics.",
+      link: "https://economics-management-statistics.phd.unime.it/sites/dot07/files/2026-10/economics_map_en.png",
+      linkLabel: "Map"
+    },
+    {
+      date: "2026-10-29",
       text: "Website relaunched. Teaching material for the next academic year will be uploaded before the start of classes."
     }
   ],
