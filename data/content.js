@@ -14,7 +14,7 @@ const SITE_CONTENT = {
     },
     {
       date: "2026-10-29",
-      text: "Website relaunched. Teaching material for the next academic year will be uploaded before the start of classes."
+      text: "Website relaunched. Teaching material for the next academic year will be uploaded before lectures."
     }
   ],
 
