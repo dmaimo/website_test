@@ -1,50 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resources — Dario Maimone Ansaldo Patti</title>
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources — Dario Maimone Ansaldo Patti</title>
+<meta name="description" content="Datasets, Stata routines and LaTeX resources for research in politics and economics.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
-<body data-page="resources" class="loading">
+<body>
 
-<nav>
-  <a class="nav-logo" href="index.html"></a>
-  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links">
-    <li class="nav-item"><a href="index.html">Home</a></li>
-    <li class="nav-item"><a href="research.html">Research</a></li>
-    <li class="nav-item"><a href="teaching.html">Teaching</a></li>
-    <li class="nav-item">
-      <a href="resources.html">Resources</a>
-      <div class="dropdown">
-        <a href="#data">Data</a>
-        <a href="#stata">Stata</a>
-        <a href="#latex">LaTeX</a>
-      </div>
-    </li>
-    <li class="nav-item"><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="monogram">MAP</span>
+      <span class="name">Dario Maimone Ansaldo Patti</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mainnav">MENU</button>
+    <nav class="main-nav" id="mainnav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="teaching.html">Teaching</a></li>
+        <li><a href="resources.html" aria-current="page">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-<div class="page-header fade-in">
-  <p class="page-eyebrow">Resources</p>
-  <h1 class="page-title">Data, Code<br>&amp; <em>Teaching Materials</em></h1>
-  <p class="page-intro" id="resources-intro"></p>
+<main>
+
+<div class="wrap page-title">
+  <p class="eyebrow">Resources</p>
+  <h1>Resources for research in politics and economics</h1>
+  <nav class="subnav" aria-label="Resource sections">
+    <a href="#data">DATA</a>
+    <a href="#stata">STATA</a>
+    <a href="#latex">LATEX</a>
+  </nav>
 </div>
 
-<section class="section">
-  <div id="resources-sections"></div>
+<section class="block" id="data">
+  <div class="wrap">
+    <h2>Data</h2>
+    <p class="lede">A list of data resources I have found useful in empirical analysis.</p>
+    <div id="res-list"></div>
+  </div>
 </section>
 
-<footer>
-  <span class="footer-name"></span>
-  <span class="footer-copy"></span>
+<section class="block alt" id="stata">
+  <div class="wrap">
+    <h2>Stata</h2>
+    <p class="lede" id="stata-intro"></p>
+
+    <h3>Useful resources</h3>
+    <div id="stata-links"></div>
+
+    <h3>Routines I find particularly useful</h3>
+    <p class="lede">Most user-written routines below can be installed from the command window with: ssc install &lt;name&gt;.</p>
+    <div id="stata-routines"></div>
+
+    <h3>Just for fun</h3>
+    <div id="stata-fun"></div>
+  </div>
+</section>
+
+<section class="block" id="latex">
+  <div class="wrap">
+    <h2>LaTeX</h2>
+    <p class="lede" id="latex-intro"></p>
+
+    <h3>Useful links</h3>
+    <div id="latex-links"></div>
+
+    <h3>A few examples</h3>
+    <div id="latex-examples"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© Dario Maimone Ansaldo Patti — University of Messina</span>
+    <span class="coords">dariomap.com</span>
+  </div>
 </footer>
 
-<script src="js/render.js"></script>
-<script src="js/main.js"></script>
+<script src="data/content.js"></script>
+<script src="js/site.js"></script>
 </body>
 </html>

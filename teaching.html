@@ -1,60 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Teaching — Dario Maimone Ansaldo Patti</title>
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teaching — Dario Maimone Ansaldo Patti</title>
+<meta name="description" content="Courses taught by Dario Maimone Ansaldo Patti at the University of Messina.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
-<body data-page="teaching" class="loading">
+<body>
 
-<nav>
-  <a class="nav-logo" href="index.html"></a>
-  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links">
-    <li class="nav-item"><a href="index.html">Home</a></li>
-    <li class="nav-item"><a href="research.html">Research</a></li>
-    <li class="nav-item">
-      <a href="teaching.html">Teaching</a>
-      <div class="dropdown">
-        <a href="#undergraduate">Undergraduate</a>
-        <a href="#postgraduate">Postgraduate</a>
-        <a href="#banking">Banking &amp; Finance</a>
-        <a href="#phd">PhD</a>
-        <a href="#exams">Exams</a>
-      </div>
-    </li>
-    <li class="nav-item"><a href="resources.html">Resources</a></li>
-    <li class="nav-item"><a href="contact.html">Contact</a></li>
-  </ul>
-</nav>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <span class="monogram">MAP</span>
+      <span class="name">Dario Maimone Ansaldo Patti</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mainnav">MENU</button>
+    <nav class="main-nav" id="mainnav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="teaching.html" aria-current="page">Teaching</a></li>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-<div class="page-header fade-in">
-  <p class="page-eyebrow">Teaching</p>
-  <h1 class="page-title">Courses &amp;<br><em>Materials</em></h1>
-  <p class="page-intro" id="teaching-intro"></p>
+<main>
+
+<div class="wrap page-title">
+  <p class="eyebrow">Teaching</p>
+  <h1>Courses</h1>
 </div>
 
-<section class="section">
-  <div id="teaching-groups"></div>
+<section class="block">
+  <div class="wrap">
+    <p class="lede">Lecture notes, slides and exam information are distributed through the University's e-learning platform and, where indicated, through the course pages below. For office hours and supervision, please get in touch by email.</p>
 
-  <div class="course-group" id="exams" style="margin-top:3.5rem;">
-    <h2 class="course-group-title">Exam Information</h2>
-    <div style="max-width:640px;">
-      <p style="font-size:.92rem;color:var(--ink-light);line-height:1.8;margin-bottom:1.5rem;" id="exams-text"></p>
-      <a href="contact.html" class="btn">Contact for Exam Queries</a>
-    </div>
+    <h3>Current courses</h3>
+    <div id="courses-current"></div>
+
+    <h3>Past courses</h3>
+    <div id="courses-past"></div>
   </div>
 </section>
 
-<footer>
-  <span class="footer-name"></span>
-  <span class="footer-copy"></span>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© Dario Maimone Ansaldo Patti — University of Messina</span>
+    <span class="coords">dariomap.com</span>
+  </div>
 </footer>
 
-<script src="js/render.js"></script>
-<script src="js/main.js"></script>
+<script src="data/content.js"></script>
+<script src="js/site.js"></script>
 </body>
 </html>

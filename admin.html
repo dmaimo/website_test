@@ -1,854 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Site Admin — Content Editor</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap');
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #f7f4ef; --sidebar: #1c2b3a; --sidebar-hover: #253647;
-      --gold: #9a7b3a; --gold-l: #c9a866; --ink: #1c2b3a;
-      --ink-l: #526070; --rule: #ddd8d0; --card: #fff;
-      --green: #2a7a4b; --red: #c0392b; --sans: 'DM Sans',system-ui,sans-serif;
-    }
-    body { font-family: var(--sans); background: var(--bg); color: var(--ink); font-size: 14px; }
-
-    /* ── SCREENS ─────────────────── */
-    .screen { display: none; min-height: 100vh; align-items: center; justify-content: center; padding: 2rem; }
-    .screen.active { display: flex; }
-    .auth-box { background: var(--card); border: 1px solid var(--rule); padding: 2.5rem; width: 100%; max-width: 480px; }
-    .auth-box h1 { font-size: 1.4rem; font-weight: 500; margin-bottom: .4rem; }
-    .auth-box p { font-size: .85rem; color: var(--ink-l); margin-bottom: 1.8rem; line-height: 1.6; }
-    .auth-box a { color: var(--gold); }
-    .field { margin-bottom: 1.2rem; }
-    .field label { display: block; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-l); margin-bottom: .4rem; }
-    .field input { width: 100%; border: 1px solid var(--rule); padding: .65rem .9rem; font-family: var(--sans); font-size: .9rem; color: var(--ink); background: var(--bg); outline: none; transition: border-color .2s; }
-    .field input:focus { border-color: var(--gold); }
-    .field small { display: block; font-size: .75rem; color: var(--ink-l); margin-top: .35rem; }
-    .btn { display: inline-block; padding: .65rem 1.5rem; font-size: .8rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; border: none; cursor: pointer; transition: background .2s; font-family: var(--sans); }
-    .btn-gold { background: var(--gold); color: white; }
-    .btn-gold:hover { background: #7a6230; }
-    .btn-dark { background: var(--ink); color: white; }
-    .btn-dark:hover { background: var(--gold); }
-    .btn-ghost { background: none; border: 1px solid var(--rule); color: var(--ink-l); }
-    .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
-    .btn-green { background: var(--green); color: white; }
-    .btn-red { background: var(--red); color: white; font-size: .75rem; padding: .4rem .8rem; }
-    .error-msg { color: var(--red); font-size: .82rem; margin-top: 1rem; display: none; }
-    .divider-line { border: none; border-top: 1px solid var(--rule); margin: 1.5rem 0; }
-
-    /* ── ADMIN LAYOUT ─────────────── */
-    #admin-screen { display: none; }
-    #admin-screen.active { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
-    aside { background: var(--sidebar); padding: 0; display: flex; flex-direction: column; }
-    .aside-logo { padding: 1.5rem 1.4rem; border-bottom: 1px solid rgba(255,255,255,.08); }
-    .aside-logo h2 { color: white; font-size: .95rem; font-weight: 500; }
-    .aside-logo span { color: var(--gold-l); }
-    nav.side-nav { flex: 1; padding: 1rem 0; overflow-y: auto; }
-    .nav-section { padding: .6rem 1.4rem .3rem; font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); }
-    .nav-item { display: block; padding: .6rem 1.4rem; font-size: .85rem; color: rgba(255,255,255,.65); cursor: pointer; transition: background .15s, color .15s; border: none; background: none; width: 100%; text-align: left; font-family: var(--sans); }
-    .nav-item:hover { background: var(--sidebar-hover); color: white; }
-    .nav-item.active { background: rgba(154,123,58,.2); color: var(--gold-l); }
-    .aside-footer { padding: 1.2rem 1.4rem; border-top: 1px solid rgba(255,255,255,.08); }
-    .aside-footer button { display: block; font-size: .78rem; color: rgba(255,255,255,.4); background: none; border: none; cursor: pointer; font-family: var(--sans); padding: 0; }
-    .aside-footer button:hover { color: rgba(255,255,255,.8); }
-
-    /* ── MAIN CONTENT ─────────────── */
-    main { overflow-y: auto; padding: 2.5rem; max-width: 900px; }
-    .panel { display: none; }
-    .panel.active { display: block; }
-    .panel-title { font-size: 1.4rem; font-weight: 500; margin-bottom: .4rem; }
-    .panel-desc { font-size: .88rem; color: var(--ink-l); margin-bottom: 2rem; line-height: 1.6; }
-
-    /* Form elements */
-    .form-row { margin-bottom: 1.2rem; }
-    .form-row label { display: block; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-l); margin-bottom: .4rem; }
-    .form-row input[type=text], .form-row input[type=url], .form-row textarea {
-      width: 100%; border: 1px solid var(--rule); padding: .65rem .9rem;
-      font-family: var(--sans); font-size: .88rem; color: var(--ink);
-      background: var(--card); outline: none; transition: border-color .2s;
-    }
-    .form-row input:focus, .form-row textarea:focus { border-color: var(--gold); }
-    .form-row textarea { min-height: 90px; resize: vertical; }
-    .form-row small { font-size: .75rem; color: var(--ink-l); margin-top: .3rem; display: block; }
-    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-    /* List items */
-    .list-item { background: var(--card); border: 1px solid var(--rule); padding: 1.2rem; margin-bottom: .8rem; }
-    .list-item-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
-    .list-item-title { font-weight: 500; font-size: .92rem; flex: 1; }
-    .list-item-sub { font-size: .8rem; color: var(--ink-l); margin-top: .15rem; }
-    .list-item-actions { display: flex; gap: .5rem; flex-shrink: 0; }
-    .item-fields { display: none; padding-top: .8rem; border-top: 1px solid var(--rule); margin-top: .6rem; }
-    .item-fields.open { display: block; }
-    .toggle-btn { background: none; border: 1px solid var(--rule); font-size: .72rem; padding: .3rem .7rem; cursor: pointer; font-family: var(--sans); color: var(--ink-l); letter-spacing: .04em; }
-    .toggle-btn:hover { border-color: var(--gold); color: var(--gold); }
-    .add-btn { display: flex; align-items: center; gap: .5rem; background: none; border: 1px dashed var(--rule); width: 100%; padding: .9rem; font-size: .82rem; color: var(--ink-l); cursor: pointer; font-family: var(--sans); transition: border-color .2s, color .2s; }
-    .add-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* Links editor */
-    .links-list { margin-top: .6rem; }
-    .link-row { display: flex; gap: .5rem; margin-bottom: .4rem; align-items: center; }
-    .link-row input { flex: 1; border: 1px solid var(--rule); padding: .5rem .7rem; font-family: var(--sans); font-size: .82rem; color: var(--ink); background: var(--card); outline: none; }
-    .link-row input:focus { border-color: var(--gold); }
-    .link-del { background: none; border: none; cursor: pointer; color: var(--ink-l); font-size: 1rem; padding: 0 .3rem; }
-    .link-del:hover { color: var(--red); }
-    .add-link-btn { background: none; border: none; font-size: .78rem; color: var(--gold); cursor: pointer; font-family: var(--sans); padding: .2rem 0; }
-
-    /* Save bar */
-    .save-bar { position: sticky; bottom: 0; background: var(--bg); border-top: 1px solid var(--rule); padding: 1rem 2.5rem; display: flex; align-items: center; gap: 1rem; margin: 2rem -2.5rem -2.5rem; }
-    .save-status { font-size: .82rem; color: var(--ink-l); }
-    .save-status.ok { color: var(--green); }
-    .save-status.err { color: var(--red); }
-
-    /* Toast */
-    #toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--ink); color: white; padding: .8rem 1.4rem; font-size: .85rem; z-index: 999; transform: translateY(4rem); opacity: 0; transition: all .3s; pointer-events: none; }
-    #toast.show { transform: translateY(0); opacity: 1; }
-    #toast.ok { background: var(--green); }
-    #toast.err { background: var(--red); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin — dariomap.com</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#16233a; --line:#d7dad2; --sea:#17517e; --brass:#a9812f; --paper:#fbfbf9; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"Source Sans 3",sans-serif; background:var(--paper); color:var(--ink); line-height:1.55; padding:2rem 1rem 4rem; }
+  .wrap { max-width:760px; margin:0 auto; }
+  h1 { font-size:1.4rem; margin-bottom:0.3rem; }
+  h2 { font-size:1.05rem; margin:2rem 0 0.8rem; font-family:"IBM Plex Mono",monospace; letter-spacing:0.1em; text-transform:uppercase; color:var(--brass); }
+  p.hint { color:#3d4a63; font-size:0.92rem; margin-bottom:0.8rem; }
+  label { display:block; font-size:0.85rem; font-weight:600; margin:0.7rem 0 0.2rem; }
+  input, textarea, select { width:100%; padding:0.5rem 0.6rem; border:1px solid var(--line); border-radius:4px; font:inherit; background:#fff; }
+  textarea { min-height:5rem; }
+  button { font-family:"IBM Plex Mono",monospace; font-size:0.82rem; letter-spacing:0.06em; background:var(--sea); color:#fff; border:none; border-radius:4px; padding:0.6rem 1rem; margin-top:0.9rem; cursor:pointer; }
+  button:hover { background:#0e3a5c; }
+  button.ghost { background:none; color:var(--sea); border:1px solid var(--line); }
+  .card { border:1px solid var(--line); border-radius:6px; background:#fff; padding:1.2rem 1.3rem; margin-bottom:1rem; }
+  .status { font-family:"IBM Plex Mono",monospace; font-size:0.8rem; margin-top:0.8rem; white-space:pre-wrap; }
+  .status.ok { color:#1d6b3a; } .status.err { color:#9d2b2b; }
+  ul.items { list-style:none; margin-top:0.6rem; }
+  ul.items li { display:flex; justify-content:space-between; gap:0.8rem; padding:0.4rem 0; border-top:1px solid var(--paper); font-size:0.92rem; }
+  ul.items button { margin:0; padding:0.2rem 0.6rem; background:#9d2b2b; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
+  @media (max-width:560px) { .row { grid-template-columns:1fr; } }
+</style>
 </head>
 <body>
-
-<!-- ── SETUP SCREEN ─────────────────────────────────── -->
-<div id="setup-screen" class="screen">
-  <div class="auth-box">
-    <h1>Site Admin — First Setup</h1>
-    <p>Connect your GitHub repository so the admin panel can read and save your site content. You only do this once.</p>
-
-    <div class="field">
-      <label>GitHub Username</label>
-      <input type="text" id="s-user" placeholder="e.g. dariomapatti" />
-    </div>
-    <div class="field">
-      <label>Repository Name</label>
-      <input type="text" id="s-repo" placeholder="e.g. dariomap-site" />
-    </div>
-    <div class="field">
-      <label>Personal Access Token (PAT)</label>
-      <input type="password" id="s-token" placeholder="ghp_xxxxxxxxxxxx" />
-      <small>
-        Go to <a href="https://github.com/settings/tokens/new" target="_blank">GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)</a>.
-        Generate a token with <strong>repo</strong> scope checked. Paste it here.
-        It is stored only in your browser's localStorage.
-      </small>
-    </div>
-    <div class="field">
-      <label>Choose an Admin Password</label>
-      <input type="password" id="s-pass" placeholder="A password you'll remember" />
-      <small>Used to protect this admin panel. Does not need to match anything else.</small>
-    </div>
-
-    <button class="btn btn-gold" onclick="saveSetup()">Connect &amp; Continue</button>
-    <p class="error-msg" id="setup-error"></p>
+<div id="gate" style="position:fixed;inset:0;background:var(--paper);z-index:50;display:flex;align-items:center;justify-content:center;padding:1rem">
+  <div class="card" style="max-width:380px;width:100%">
+    <h2 style="margin-top:0">Area riservata</h2>
+    <label>Password</label>
+    <input id="gate-pass" type="password" autocomplete="off">
+    <button id="gate-btn">ENTRA</button>
+    <div id="gate-status" class="status"></div>
   </div>
 </div>
 
-<!-- ── LOGIN SCREEN ─────────────────────────────────── -->
-<div id="login-screen" class="screen">
-  <div class="auth-box">
-    <h1>Site Admin</h1>
-    <p>Enter your admin password to access the content editor.</p>
-    <div class="field">
-      <label>Password</label>
-      <input type="password" id="l-pass" placeholder="Admin password" onkeydown="if(event.key==='Enter')doLogin()" />
+<div class="wrap">
+  <h1>Pannello di amministrazione — dariomap.com</h1>
+  <p class="hint">Le modifiche vengono salvate direttamente nel file <code>data/content.js</code> del repository GitHub. Dopo il salvataggio il sito si aggiorna automaticamente in 1–2 minuti.</p>
+
+  <div class="card">
+    <h2 style="margin-top:0">Connessione</h2>
+    <div class="row">
+      <div><label>Utente GitHub</label><input id="gh-owner" placeholder="es. dariomap"></div>
+      <div><label>Repository</label><input id="gh-repo" placeholder="es. dariomap-site"></div>
     </div>
-    <button class="btn btn-gold" onclick="doLogin()">Login</button>
-    <p class="error-msg" id="login-error">Incorrect password.</p>
-    <hr class="divider-line" />
-    <button class="btn btn-ghost" onclick="resetSetup()" style="font-size:.75rem;">Reset credentials</button>
+    <label>Personal Access Token (fine-grained, permesso "Contents: read &amp; write" sul repo)</label>
+    <input id="gh-token" type="password" placeholder="github_pat_...">
+    <p class="hint" style="margin-top:0.4rem">Il token resta solo in questa scheda del browser e non viene salvato in modo permanente.</p>
+    <button id="btn-connect">CARICA CONTENUTI</button>
+    <div id="st-connect" class="status"></div>
+  </div>
+
+  <div id="editor" style="display:none">
+
+    <div class="card">
+      <h2 style="margin-top:0">News</h2>
+      <p class="hint">Le news più vecchie di 12 mesi spariscono automaticamente dalla homepage, ma puoi anche cancellarle qui.</p>
+      <ul class="items" id="news-items"></ul>
+      <label>Data</label><input id="news-date" type="date">
+      <label>Testo</label><textarea id="news-text"></textarea>
+      <button id="btn-add-news">AGGIUNGI NEWS</button>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Nuova pubblicazione (articolo)</h2>
+      <label>Titolo</label><input id="pub-title">
+      <label>Coautori (es. "with L. Leonida and P. Navarra")</label><input id="pub-authors">
+      <label>Rivista, volume, pagine</label><input id="pub-outlet">
+      <div class="row">
+        <div><label>Anno</label><input id="pub-year" type="number"></div>
+        <div><label>Link PDF (opzionale)</label><input id="pub-link"></div>
+      </div>
+      <label><input type="checkbox" id="pub-selected" style="width:auto"> Mostra tra le "Selected publications" in homepage</label>
+      <button id="btn-add-pub">AGGIUNGI ARTICOLO</button>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0">Editor avanzato (JSON)</h2>
+      <p class="hint">Per corsi, risorse, capitoli e ogni altra modifica: qui puoi modificare l'intero contenuto del sito.</p>
+      <textarea id="raw-json" style="min-height:16rem; font-family:'IBM Plex Mono',monospace; font-size:0.8rem"></textarea>
+    </div>
+
+    <button id="btn-save">SALVA E PUBBLICA</button>
+    <div id="st-save" class="status"></div>
   </div>
 </div>
-
-<!-- ── ADMIN PANEL ──────────────────────────────────── -->
-<div id="admin-screen">
-  <aside>
-    <div class="aside-logo">
-      <h2>Site Admin<br><span style="font-size:.8rem;font-weight:300;">Content Editor</span></h2>
-    </div>
-    <nav class="side-nav">
-      <div class="nav-section">Pages</div>
-      <button class="nav-item active" data-panel="home">🏠 Home</button>
-      <div class="nav-section">Research</div>
-      <button class="nav-item" data-panel="publications">📄 Publications</button>
-      <button class="nav-item" data-panel="wip">🔬 Works in Progress</button>
-      <div class="nav-section">Teaching</div>
-      <button class="nav-item" data-panel="courses">📚 Courses</button>
-      <button class="nav-item" data-panel="exams">📋 Exam Info</button>
-      <div class="nav-section">Other</div>
-      <button class="nav-item" data-panel="resources">🗂 Resources</button>
-      <button class="nav-item" data-panel="contact">📬 Contact Info</button>
-      <div class="nav-section">Site</div>
-      <button class="nav-item" data-panel="meta">⚙ Site Info</button>
-    </nav>
-    <div class="aside-footer">
-      <button onclick="doLogout()">← Logout</button>
-    </div>
-  </aside>
-
-  <div style="display:flex;flex-direction:column;">
-    <main id="panels-container">
-
-      <!-- HOME -->
-      <div class="panel active" id="panel-home">
-        <h2 class="panel-title">Home Page</h2>
-        <p class="panel-desc">Edit the biography and headline text shown on the homepage.</p>
-        <div class="form-row"><label>Eyebrow text (small line above headline)</label><input type="text" data-path="home.eyebrow" /></div>
-        <div class="form-grid-2">
-          <div class="form-row"><label>Headline (main)</label><input type="text" data-path="home.headline" /></div>
-          <div class="form-row"><label>Headline italic part</label><input type="text" data-path="home.headline_em" /></div>
-        </div>
-        <div class="form-row"><label>Subtitle</label><input type="text" data-path="home.subtitle" /></div>
-        <div class="form-row"><label>Bio paragraph 1</label><textarea data-path="home.bio1"></textarea></div>
-        <div class="form-row"><label>Bio paragraph 2</label><textarea data-path="home.bio2"></textarea></div>
-        <div class="form-row"><label>Address (shown in sidebar card)</label><textarea data-path="home.address" style="min-height:70px"></textarea><small>Use line breaks as needed.</small></div>
-        <div class="form-grid-2">
-          <div class="form-row"><label>Website label</label><input type="text" data-path="home.website_label" /></div>
-          <div class="form-row"><label>Website URL</label><input type="url" data-path="home.website_url" /></div>
-        </div>
-      </div>
-
-      <!-- PUBLICATIONS -->
-      <div class="panel" id="panel-publications">
-        <h2 class="panel-title">Publications</h2>
-        <p class="panel-desc">Add, edit, or remove publications. They appear on the Research page in the order listed.</p>
-        <div id="pub-list"></div>
-        <button class="add-btn" onclick="addPublication()">+ Add publication</button>
-      </div>
-
-      <!-- WIP -->
-      <div class="panel" id="panel-wip">
-        <h2 class="panel-title">Works in Progress</h2>
-        <p class="panel-desc">Projects that are underway but not yet published.</p>
-        <div id="wip-list"></div>
-        <button class="add-btn" onclick="addWip()">+ Add work in progress</button>
-      </div>
-
-      <!-- COURSES -->
-      <div class="panel" id="panel-courses">
-        <h2 class="panel-title">Courses</h2>
-        <p class="panel-desc">Manage course groups and individual courses. Groups appear in the order listed.</p>
-        <div id="course-groups"></div>
-        <button class="add-btn" onclick="addCourseGroup()">+ Add course group</button>
-      </div>
-
-      <!-- EXAMS -->
-      <div class="panel" id="panel-exams">
-        <h2 class="panel-title">Exam Information</h2>
-        <p class="panel-desc">The text shown in the Exams section of the Teaching page.</p>
-        <div class="form-row"><label>Exam info text</label><textarea data-path="teaching.exams_text" style="min-height:140px"></textarea></div>
-        <div class="form-row"><label>Teaching page intro</label><textarea data-path="teaching.intro"></textarea></div>
-      </div>
-
-      <!-- RESOURCES -->
-      <div class="panel" id="panel-resources">
-        <h2 class="panel-title">Resources</h2>
-        <p class="panel-desc">Edit resource blocks (Data, Stata, LaTeX sections) including links within each block.</p>
-        <div class="form-row"><label>Page intro text</label><textarea data-path="resources.intro"></textarea></div>
-        <div id="resource-sections"></div>
-      </div>
-
-      <!-- CONTACT -->
-      <div class="panel" id="panel-contact">
-        <h2 class="panel-title">Contact Info</h2>
-        <p class="panel-desc">Details shown on the Contact page and in the homepage sidebar card.</p>
-        <div class="form-row"><label>Position / title</label><input type="text" data-path="contact.position" /></div>
-        <div class="form-row"><label>Department (full, multi-line OK)</label><textarea data-path="contact.dept_full" style="min-height:60px"></textarea></div>
-        <div class="form-row"><label>Address</label><textarea data-path="contact.address" style="min-height:80px"></textarea></div>
-        <div class="form-grid-2">
-          <div class="form-row"><label>Institution label</label><input type="text" data-path="contact.institution_label" /></div>
-          <div class="form-row"><label>Institution URL</label><input type="url" data-path="contact.institution_url" /></div>
-        </div>
-        <div class="form-grid-2">
-          <div class="form-row"><label>Department label</label><input type="text" data-path="contact.dept_label" /></div>
-          <div class="form-row"><label>Department URL</label><input type="url" data-path="contact.dept_url" /></div>
-        </div>
-        <div class="form-row"><label>Office hours text</label><textarea data-path="contact.office_hours"></textarea></div>
-      </div>
-
-      <!-- META -->
-      <div class="panel" id="panel-meta">
-        <h2 class="panel-title">Site Info</h2>
-        <p class="panel-desc">Basic site-wide information used across all pages.</p>
-        <div class="form-row"><label>Full name (as shown in nav / footer)</label><input type="text" data-path="meta.name" /></div>
-        <div class="form-row"><label>Title / position</label><input type="text" data-path="meta.title" /></div>
-        <div class="form-row"><label>University name (for footer)</label><input type="text" data-path="meta.university" /></div>
-        <div class="form-row"><label>Year (for footer copyright)</label><input type="text" data-path="meta.year" /></div>
-        <hr class="divider-line" />
-        <h3 style="font-size:1rem;margin-bottom:.8rem;">GitHub Connection</h3>
-        <div class="form-grid-2">
-          <div class="form-row"><label>GitHub username</label><input type="text" id="cfg-user" /></div>
-          <div class="form-row"><label>Repository name</label><input type="text" id="cfg-repo" /></div>
-        </div>
-        <div class="form-row"><label>Personal Access Token</label><input type="password" id="cfg-token" /></div>
-        <button class="btn btn-dark" onclick="updateCredentials()">Update credentials</button>
-      </div>
-
-    </main>
-
-    <div class="save-bar">
-      <button class="btn btn-gold" onclick="saveToGitHub()">💾 Save to GitHub</button>
-      <span class="save-status" id="save-status">All changes are local until saved.</span>
-      <a href="index.html" target="_blank" class="btn btn-ghost" style="margin-left:auto;font-size:.72rem;">View site ↗</a>
-    </div>
-  </div>
-</div>
-
-<div id="toast"></div>
 
 <script>
-// ─── State ───────────────────────────────────────────────────
-let contentData = null;
-let fileSha = null;
+// ---- password gate ----
+// Deterrente per i curiosi: la sicurezza reale resta il token GitHub.
+// Per cambiare la password: apri la console del browser (F12) su questa
+// pagina e digita  hashPass("nuova-password")  — poi incolla il valore
+// ottenuto in GATE_HASH qui sotto.
+const GATE_HASH = "7df68d37d8d8f39103654281927eeb122de62ee44d5722b0d617eab5417c47e1";
 
-// ─── Init ────────────────────────────────────────────────────
-(function init() {
-  const creds = getCredentials();
-  if (!creds) {
-    show('setup-screen');
-  } else if (!sessionStorage.getItem('admin_auth')) {
-    show('login-screen');
+async function hashPass(p) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("dariomap:" + p));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function tryGate() {
+  const p = document.getElementById("gate-pass").value;
+  if (await hashPass(p) === GATE_HASH) {
+    document.getElementById("gate").remove();
   } else {
-    loadAndShow();
-  }
-})();
-
-function show(id) {
-  document.querySelectorAll('.screen, #admin-screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// ─── Credentials ─────────────────────────────────────────────
-function getCredentials() {
-  const u = localStorage.getItem('gh_user');
-  const r = localStorage.getItem('gh_repo');
-  const t = localStorage.getItem('gh_token');
-  const p = localStorage.getItem('admin_hash');
-  return (u && r && t && p) ? { user: u, repo: r, token: t, hash: p } : null;
-}
-
-async function saveSetup() {
-  const user  = document.getElementById('s-user').value.trim();
-  const repo  = document.getElementById('s-repo').value.trim();
-  const token = document.getElementById('s-token').value.trim();
-  const pass  = document.getElementById('s-pass').value;
-  const err   = document.getElementById('setup-error');
-  err.style.display = 'none';
-
-  if (!user || !repo || !token || !pass) {
-    err.textContent = 'All fields are required.'; err.style.display = 'block'; return;
-  }
-
-  // Verify token can read the repo
-  const res = await fetch(`https://api.github.com/repos/${user}/${repo}`, {
-    headers: { Authorization: `token ${token}` }
-  });
-  if (!res.ok) {
-    err.textContent = 'Could not connect to repository. Check username, repo name, and token.';
-    err.style.display = 'block'; return;
-  }
-
-  localStorage.setItem('gh_user',    user);
-  localStorage.setItem('gh_repo',    repo);
-  localStorage.setItem('gh_token',   token);
-  localStorage.setItem('admin_hash', await hashPass(pass));
-  sessionStorage.setItem('admin_auth', '1');
-  loadAndShow();
-}
-
-function resetSetup() {
-  if (!confirm('This will clear all saved credentials. Continue?')) return;
-  ['gh_user','gh_repo','gh_token','admin_hash'].forEach(k => localStorage.removeItem(k));
-  sessionStorage.removeItem('admin_auth');
-  show('setup-screen');
-}
-
-async function doLogin() {
-  const pass = document.getElementById('l-pass').value;
-  const hash = await hashPass(pass);
-  if (hash === localStorage.getItem('admin_hash')) {
-    sessionStorage.setItem('admin_auth', '1');
-    loadAndShow();
-  } else {
-    document.getElementById('login-error').style.display = 'block';
+    const s = document.getElementById("gate-status");
+    s.textContent = "Password errata.";
+    s.className = "status err";
   }
 }
 
-function doLogout() {
-  sessionStorage.removeItem('admin_auth');
-  show('login-screen');
+document.getElementById("gate-btn").addEventListener("click", tryGate);
+document.getElementById("gate-pass").addEventListener("keydown", e => { if (e.key === "Enter") tryGate(); });
+
+let state = { owner:"", repo:"", token:"", sha:"", content:null };
+const PATH = "data/content.js";
+
+const $ = id => document.getElementById(id);
+
+function status(id, msg, ok) {
+  const e = $(id);
+  e.textContent = msg;
+  e.className = "status " + (ok ? "ok" : "err");
 }
 
-async function hashPass(pass) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pass));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-}
-
-function updateCredentials() {
-  const user  = document.getElementById('cfg-user').value.trim();
-  const repo  = document.getElementById('cfg-repo').value.trim();
-  const token = document.getElementById('cfg-token').value.trim();
-  if (user) localStorage.setItem('gh_user', user);
-  if (repo) localStorage.setItem('gh_repo', repo);
-  if (token) localStorage.setItem('gh_token', token);
-  toast('Credentials updated', 'ok');
-}
-
-// ─── Load content from GitHub ────────────────────────────────
-async function loadAndShow() {
-  show('admin-screen');
-  const creds = getCredentials();
-  document.getElementById('cfg-user').value = creds.user;
-  document.getElementById('cfg-repo').value = creds.repo;
-
-  try {
-    const res = await fetch(
-      `https://api.github.com/repos/${creds.user}/${creds.repo}/contents/content.json`,
-      { headers: { Authorization: `token ${creds.token}`, Accept: 'application/vnd.github.v3+json' } }
-    );
-    if (!res.ok) throw new Error('Failed to fetch content.json');
-    const json = await res.json();
-    fileSha = json.sha;
-    contentData = JSON.parse(atob(json.content.replace(/\n/g, '')));
-    populateForms();
-    toast('Content loaded', 'ok');
-  } catch(e) {
-    toast('Could not load content: ' + e.message, 'err');
-    setStatus('Error loading content. Check credentials.', 'err');
-  }
-}
-
-// ─── Populate all form fields ────────────────────────────────
-function populateForms() {
-  // Simple data-path fields
-  document.querySelectorAll('[data-path]').forEach(el => {
-    const val = getPath(contentData, el.dataset.path);
-    el.value = val !== undefined ? val : '';
-  });
-
-  buildPublications();
-  buildWip();
-  buildCourses();
-  buildResources();
-}
-
-function getPath(obj, path) {
-  return path.split('.').reduce((o, k) => (o && o[k] !== undefined) ? o[k] : undefined, obj);
-}
-
-function setPath(obj, path, val) {
-  const keys = path.split('.');
-  let cur = obj;
-  for (let i = 0; i < keys.length - 1; i++) { cur = cur[keys[i]]; }
-  cur[keys[keys.length - 1]] = val;
-}
-
-// Collect all form values back into contentData
-function collectFormData() {
-  document.querySelectorAll('[data-path]').forEach(el => {
-    setPath(contentData, el.dataset.path, el.value.trim());
-  });
-  collectPublications();
-  collectWip();
-  collectCourses();
-  collectResources();
-}
-
-// ─── Publications ────────────────────────────────────────────
-function buildPublications() {
-  const container = document.getElementById('pub-list');
-  container.innerHTML = '';
-  contentData.research.publications.forEach((p, i) => {
-    container.appendChild(makePubItem(p, i));
-  });
-}
-
-function makePubItem(p, i) {
-  const div = document.createElement('div');
-  div.className = 'list-item';
-  div.dataset.pubIdx = i;
-  div.innerHTML = `
-    <div class="list-item-header">
-      <div>
-        <div class="list-item-title">${esc(p.title) || '(New publication)'}</div>
-        <div class="list-item-sub">${esc(p.year)} · ${esc(p.journal)}</div>
-      </div>
-      <div class="list-item-actions">
-        <button class="toggle-btn" onclick="toggleItem(this)">Edit</button>
-        <button class="btn btn-red" onclick="removePub(${i})">Remove</button>
-      </div>
-    </div>
-    <div class="item-fields">
-      <div class="form-grid-2">
-        <div class="form-row"><label>Year</label><input type="text" class="pub-year" value="${esc(p.year)}" /></div>
-        <div class="form-row"><label>Authors</label><input type="text" class="pub-authors" value="${esc(p.authors)}" /></div>
-      </div>
-      <div class="form-row"><label>Title</label><input type="text" class="pub-title" value="${esc(p.title)}" oninput="updatePubHeader(this)" /></div>
-      <div class="form-row"><label>Journal / Publisher</label><input type="text" class="pub-journal" value="${esc(p.journal)}" /></div>
-      <div class="form-grid-2">
-        <div class="form-row"><label>Abstract URL (optional)</label><input type="url" class="pub-abstract" value="${esc(p.abstract_url)}" /></div>
-        <div class="form-row"><label>PDF URL (optional)</label><input type="url" class="pub-pdf" value="${esc(p.pdf_url)}" /></div>
-      </div>
-    </div>`;
-  return div;
-}
-
-function updatePubHeader(input) {
-  const item = input.closest('.list-item');
-  item.querySelector('.list-item-title').textContent = input.value || '(New publication)';
-}
-
-function removePub(i) {
-  if (!confirm('Remove this publication?')) return;
-  contentData.research.publications.splice(i, 1);
-  buildPublications();
-}
-
-function addPublication() {
-  contentData.research.publications.push({ id: 'pub' + Date.now(), year: '', title: '', authors: '', journal: '', abstract_url: '', pdf_url: '' });
-  buildPublications();
-  const items = document.querySelectorAll('#pub-list .list-item');
-  const last = items[items.length - 1];
-  last.querySelector('.item-fields').classList.add('open');
-  last.scrollIntoView({ behavior: 'smooth' });
-}
-
-function collectPublications() {
-  const pubs = [];
-  document.querySelectorAll('#pub-list .list-item').forEach((item, i) => {
-    pubs.push({
-      id: contentData.research.publications[i]?.id || 'pub' + i,
-      year:         item.querySelector('.pub-year').value.trim(),
-      title:        item.querySelector('.pub-title').value.trim(),
-      authors:      item.querySelector('.pub-authors').value.trim(),
-      journal:      item.querySelector('.pub-journal').value.trim(),
-      abstract_url: item.querySelector('.pub-abstract').value.trim(),
-      pdf_url:      item.querySelector('.pub-pdf').value.trim(),
-    });
-  });
-  contentData.research.publications = pubs;
-}
-
-// ─── Works in Progress ───────────────────────────────────────
-function buildWip() {
-  const container = document.getElementById('wip-list');
-  container.innerHTML = '';
-  contentData.research.wip.forEach((w, i) => {
-    container.appendChild(makeWipItem(w, i));
-  });
-}
-
-function makeWipItem(w, i) {
-  const div = document.createElement('div');
-  div.className = 'list-item';
-  div.innerHTML = `
-    <div class="list-item-header">
-      <div>
-        <div class="list-item-title">${esc(w.title) || '(New item)'}</div>
-        <div class="list-item-sub">${esc(w.tag)}</div>
-      </div>
-      <div class="list-item-actions">
-        <button class="toggle-btn" onclick="toggleItem(this)">Edit</button>
-        <button class="btn btn-red" onclick="removeWip(${i})">Remove</button>
-      </div>
-    </div>
-    <div class="item-fields">
-      <div class="form-grid-2">
-        <div class="form-row"><label>Tag / Category</label><input type="text" class="wip-tag" value="${esc(w.tag)}" /></div>
-        <div class="form-row"><label>Status label</label><input type="text" class="wip-status" value="${esc(w.status)}" /></div>
-      </div>
-      <div class="form-row"><label>Title</label><input type="text" class="wip-title" value="${esc(w.title)}" oninput="this.closest('.list-item').querySelector('.list-item-title').textContent=this.value" /></div>
-      <div class="form-row"><label>Description</label><textarea class="wip-desc">${esc(w.description)}</textarea></div>
-    </div>`;
-  return div;
-}
-
-function removeWip(i) {
-  if (!confirm('Remove this item?')) return;
-  contentData.research.wip.splice(i, 1);
-  buildWip();
-}
-
-function addWip() {
-  contentData.research.wip.push({ id: 'wip' + Date.now(), tag: '', title: '', description: '', status: 'In preparation' });
-  buildWip();
-  const items = document.querySelectorAll('#wip-list .list-item');
-  const last = items[items.length - 1];
-  last.querySelector('.item-fields').classList.add('open');
-  last.scrollIntoView({ behavior: 'smooth' });
-}
-
-function collectWip() {
-  const wips = [];
-  document.querySelectorAll('#wip-list .list-item').forEach((item, i) => {
-    wips.push({
-      id:          contentData.research.wip[i]?.id || 'wip' + i,
-      tag:         item.querySelector('.wip-tag').value.trim(),
-      title:       item.querySelector('.wip-title').value.trim(),
-      description: item.querySelector('.wip-desc').value.trim(),
-      status:      item.querySelector('.wip-status').value.trim(),
-    });
-  });
-  contentData.research.wip = wips;
-}
-
-// ─── Courses ─────────────────────────────────────────────────
-function buildCourses() {
-  const container = document.getElementById('course-groups');
-  container.innerHTML = '';
-  contentData.teaching.groups.forEach((g, gi) => {
-    const div = document.createElement('div');
-    div.className = 'list-item';
-    div.style.marginBottom = '1.2rem';
-    div.innerHTML = `
-      <div class="list-item-header">
-        <div class="list-item-title">📂 ${esc(g.title)}</div>
-        <div class="list-item-actions">
-          <button class="toggle-btn" onclick="toggleItem(this)">Edit group</button>
-          <button class="btn btn-red" onclick="removeCourseGroup(${gi})">Remove group</button>
-        </div>
-      </div>
-      <div class="item-fields">
-        <div class="form-row"><label>Group title</label><input type="text" class="grp-title" value="${esc(g.title)}" oninput="this.closest('.list-item').querySelector('.list-item-title').textContent='📂 '+this.value" /></div>
-        <div class="form-row"><label>Group anchor ID (no spaces)</label><input type="text" class="grp-id" value="${esc(g.id)}" /></div>
-        <div style="margin-top:.8rem;padding-top:.8rem;border-top:1px solid var(--rule);">
-          <label style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-l);display:block;margin-bottom:.6rem;">Courses in this group</label>
-          <div class="grp-courses" data-gi="${gi}">
-            ${g.courses.map((c, ci) => makeCourseRow(c, gi, ci)).join('')}
-          </div>
-          <button class="add-btn" onclick="addCourse(${gi})" style="margin-top:.4rem;">+ Add course</button>
-        </div>
-      </div>`;
-    container.appendChild(div);
-  });
-}
-
-function makeCourseRow(c, gi, ci) {
-  return `<div class="list-item" style="margin-bottom:.6rem;" data-gi="${gi}" data-ci="${ci}">
-    <div style="display:flex;gap:.5rem;align-items:flex-start;">
-      <div style="flex:1">
-        <div class="form-row" style="margin-bottom:.5rem;">
-          <input type="text" class="c-name" placeholder="Course name" value="${esc(c.name)}" style="width:100%;border:1px solid var(--rule);padding:.5rem .7rem;font-family:var(--sans);font-size:.82rem;color:var(--ink);background:var(--bg);outline:none;" />
-        </div>
-        <div class="form-grid-2">
-          <input type="text" class="c-sub" placeholder="Sub-title (optional)" value="${esc(c.sub)}" style="border:1px solid var(--rule);padding:.5rem .7rem;font-family:var(--sans);font-size:.78rem;color:var(--ink);background:var(--bg);outline:none;" />
-          <input type="text" class="c-badge" placeholder="Badge e.g. Bachelor's" value="${esc(c.badge)}" style="border:1px solid var(--rule);padding:.5rem .7rem;font-family:var(--sans);font-size:.78rem;color:var(--ink);background:var(--bg);outline:none;" />
-        </div>
-      </div>
-      <button class="btn btn-red" onclick="removeCourse(${gi}, ${ci})" style="margin-top:2px;">✕</button>
-    </div>
-  </div>`;
-}
-
-function addCourseGroup() {
-  contentData.teaching.groups.push({ id: 'group' + Date.now(), title: 'New Group', courses: [] });
-  buildCourses();
-}
-
-function removeCourseGroup(gi) {
-  if (!confirm('Remove this entire group?')) return;
-  contentData.teaching.groups.splice(gi, 1);
-  buildCourses();
-}
-
-function addCourse(gi) {
-  contentData.teaching.groups[gi].courses.push({ name: '', sub: '', badge: '' });
-  buildCourses();
-  const grpCourses = document.querySelectorAll('.grp-courses')[gi];
-  if (grpCourses) grpCourses.scrollIntoView({ behavior: 'smooth' });
-}
-
-function removeCourse(gi, ci) {
-  contentData.teaching.groups[gi].courses.splice(ci, 1);
-  buildCourses();
-}
-
-function collectCourses() {
-  const groups = [];
-  document.querySelectorAll('#course-groups > .list-item').forEach((gItem, gi) => {
-    const title = gItem.querySelector('.grp-title').value.trim();
-    const id    = gItem.querySelector('.grp-id').value.trim();
-    const courses = [];
-    gItem.querySelectorAll('.grp-courses .list-item').forEach(cItem => {
-      courses.push({
-        name:  cItem.querySelector('.c-name').value.trim(),
-        sub:   cItem.querySelector('.c-sub').value.trim(),
-        badge: cItem.querySelector('.c-badge').value.trim(),
-      });
-    });
-    groups.push({ id, title, courses });
-  });
-  contentData.teaching.groups = groups;
-}
-
-// ─── Resources ───────────────────────────────────────────────
-function buildResources() {
-  const container = document.getElementById('resource-sections');
-  container.innerHTML = '';
-  contentData.resources.sections.forEach((sec, si) => {
-    const div = document.createElement('div');
-    div.className = 'list-item';
-    div.style.marginBottom = '1.2rem';
-    div.innerHTML = `
-      <div class="list-item-header">
-        <div class="list-item-title">${esc(sec.label)} — ${esc(sec.title)}</div>
-        <button class="toggle-btn" onclick="toggleItem(this)">Edit section</button>
-      </div>
-      <div class="item-fields">
-        <div class="form-grid-2">
-          <div class="form-row"><label>Label (e.g. 01)</label><input type="text" class="sec-label" value="${esc(sec.label)}" /></div>
-          <div class="form-row"><label>Section title</label><input type="text" class="sec-title" value="${esc(sec.title)}" /></div>
-        </div>
-        <div style="margin-top:.8rem;">
-          <label style="font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-l);display:block;margin-bottom:.6rem;">Blocks</label>
-          <div class="sec-blocks" data-si="${si}">
-            ${sec.blocks.map((b, bi) => makeBlockItem(b, si, bi)).join('')}
-          </div>
-          <button class="add-btn" onclick="addBlock(${si})" style="margin-top:.4rem;">+ Add block</button>
-        </div>
-      </div>`;
-    container.appendChild(div);
-  });
-}
-
-function makeBlockItem(b, si, bi) {
-  const linksHtml = b.links.map((l, li) => `
-    <div class="link-row">
-      <input type="text" class="lnk-text" placeholder="Link label" value="${esc(l.text)}" />
-      <input type="url" class="lnk-url" placeholder="https://..." value="${esc(l.url)}" />
-      <button class="link-del" onclick="removeLink(this)">✕</button>
-    </div>`).join('');
-
-  return `<div class="list-item" style="margin-bottom:.8rem;" data-si="${si}" data-bi="${bi}">
-    <div class="list-item-header">
-      <div class="list-item-title" style="font-size:.88rem;">${esc(b.title)}</div>
-      <button class="btn btn-red" onclick="removeBlock(${si}, ${bi})">Remove</button>
-    </div>
-    <div class="form-row"><label>Block title</label><input type="text" class="blk-title" value="${esc(b.title)}" oninput="this.closest('.list-item').querySelector('.list-item-title').textContent=this.value" /></div>
-    <div class="form-row"><label>Description</label><textarea class="blk-desc">${esc(b.description)}</textarea></div>
-    <div class="form-row">
-      <label>Links</label>
-      <div class="links-list">${linksHtml}</div>
-      <button class="add-link-btn" onclick="addLink(this)">+ Add link</button>
-    </div>
-  </div>`;
-}
-
-function addBlock(si) {
-  contentData.resources.sections[si].blocks.push({ title: '', description: '', links: [] });
-  buildResources();
-}
-
-function removeBlock(si, bi) {
-  if (!confirm('Remove this block?')) return;
-  contentData.resources.sections[si].blocks.splice(bi, 1);
-  buildResources();
-}
-
-function addLink(btn) {
-  const ll = btn.previousElementSibling;
-  const row = document.createElement('div');
-  row.className = 'link-row';
-  row.innerHTML = `<input type="text" class="lnk-text" placeholder="Link label" /><input type="url" class="lnk-url" placeholder="https://..." /><button class="link-del" onclick="removeLink(this)">✕</button>`;
-  ll.appendChild(row);
-}
-
-function removeLink(btn) {
-  btn.closest('.link-row').remove();
-}
-
-function collectResources() {
-  const sections = [];
-  document.querySelectorAll('#resource-sections > .list-item').forEach((sItem, si) => {
-    const blocks = [];
-    sItem.querySelectorAll('.sec-blocks .list-item').forEach(bItem => {
-      const links = [];
-      bItem.querySelectorAll('.link-row').forEach(lr => {
-        const t = lr.querySelector('.lnk-text').value.trim();
-        const u = lr.querySelector('.lnk-url').value.trim();
-        if (t || u) links.push({ text: t, url: u });
-      });
-      blocks.push({
-        title:       bItem.querySelector('.blk-title').value.trim(),
-        description: bItem.querySelector('.blk-desc').value.trim(),
-        links,
-      });
-    });
-    sections.push({
-      id:    contentData.resources.sections[si]?.id || 'sec' + si,
-      label: sItem.querySelector('.sec-label').value.trim(),
-      title: sItem.querySelector('.sec-title').value.trim(),
-      blocks,
-    });
-  });
-  contentData.resources.sections = sections;
-}
-
-// ─── Save to GitHub ──────────────────────────────────────────
-async function saveToGitHub() {
-  collectFormData();
-  const creds = getCredentials();
-  setStatus('Saving…', '');
-
-  const body = JSON.stringify({
-    message: 'Update content via admin panel',
-    content: btoa(unescape(encodeURIComponent(JSON.stringify(contentData, null, 2)))),
-    sha: fileSha,
-  });
-
-  try {
-    const res = await fetch(
-      `https://api.github.com/repos/${creds.user}/${creds.repo}/contents/content.json`,
-      { method: 'PUT', headers: { Authorization: `token ${creds.token}`, 'Content-Type': 'application/json' }, body }
-    );
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.message || 'Save failed');
+async function gh(url, opts = {}) {
+  const r = await fetch("https://api.github.com" + url, {
+    ...opts,
+    headers: {
+      "Authorization": "Bearer " + state.token,
+      "Accept": "application/vnd.github+json",
+      ...(opts.headers || {})
     }
-    const data = await res.json();
-    fileSha = data.content.sha;
-    setStatus('✓ Saved to GitHub — Netlify will rebuild in ~30 seconds', 'ok');
-    toast('Saved to GitHub!', 'ok');
-  } catch(e) {
-    setStatus('Error: ' + e.message, 'err');
-    toast('Save failed: ' + e.message, 'err');
-  }
-}
-
-// ─── UI helpers ───────────────────────────────────────────────
-function toggleItem(btn) {
-  const fields = btn.closest('.list-item').querySelector('.item-fields');
-  fields.classList.toggle('open');
-  btn.textContent = fields.classList.contains('open') ? 'Close' : 'Edit';
-}
-
-function setStatus(msg, type) {
-  const el = document.getElementById('save-status');
-  el.textContent = msg;
-  el.className = 'save-status ' + (type || '');
-}
-
-function toast(msg, type) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'show ' + (type || '');
-  setTimeout(() => t.className = '', 3000);
-}
-
-function esc(s) {
-  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// Sidebar panel navigation
-document.querySelectorAll('.nav-item[data-panel]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
   });
+  if (!r.ok) throw new Error(r.status + " " + (await r.text()).slice(0, 200));
+  return r.json();
+}
+
+$("btn-connect").addEventListener("click", async () => {
+  state.owner = $("gh-owner").value.trim();
+  state.repo = $("gh-repo").value.trim();
+  state.token = $("gh-token").value.trim();
+  if (!state.owner || !state.repo || !state.token) {
+    return status("st-connect", "Compila tutti i campi.", false);
+  }
+  try {
+    status("st-connect", "Caricamento…", true);
+    const f = await gh(`/repos/${state.owner}/${state.repo}/contents/${PATH}`);
+    state.sha = f.sha;
+    const text = decodeURIComponent(escape(atob(f.content.replace(/\n/g, ""))));
+    const jsonText = text.replace(/^[\s\S]*?const\s+SITE_CONTENT\s*=\s*/, "").replace(/;\s*$/, "");
+    state.content = JSON.parse(jsonText);
+    renderEditor();
+    status("st-connect", "Contenuti caricati ✓", true);
+    $("editor").style.display = "block";
+  } catch (e) {
+    status("st-connect", "Errore: " + e.message, false);
+  }
+});
+
+function renderEditor() {
+  const C = state.content;
+  const ul = $("news-items");
+  ul.innerHTML = "";
+  C.news.forEach((n, i) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span><strong>${n.date}</strong> — ${n.text}</span>`;
+    const del = document.createElement("button");
+    del.textContent = "X";
+    del.onclick = () => { C.news.splice(i, 1); renderEditor(); };
+    li.appendChild(del);
+    ul.appendChild(li);
+  });
+  $("raw-json").value = JSON.stringify(C, null, 2);
+}
+
+$("btn-add-news").addEventListener("click", () => {
+  const d = $("news-date").value, t = $("news-text").value.trim();
+  if (!d || !t) return;
+  state.content.news.unshift({ date: d, text: t });
+  $("news-text").value = "";
+  renderEditor();
+});
+
+$("btn-add-pub").addEventListener("click", () => {
+  const title = $("pub-title").value.trim();
+  if (!title) return;
+  const id = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40);
+  state.content.publications.articles.unshift({
+    id,
+    title,
+    authors: $("pub-authors").value.trim(),
+    outlet: $("pub-outlet").value.trim(),
+    year: parseInt($("pub-year").value) || new Date().getFullYear(),
+    link: $("pub-link").value.trim()
+  });
+  if ($("pub-selected").checked) state.content.selectedPublications.unshift(id);
+  ["pub-title","pub-authors","pub-outlet","pub-year","pub-link"].forEach(i => $(i).value = "");
+  renderEditor();
+});
+
+$("btn-save").addEventListener("click", async () => {
+  try {
+    // if the raw JSON was edited, it wins
+    state.content = JSON.parse($("raw-json").value);
+  } catch (e) {
+    return status("st-save", "JSON non valido nell'editor avanzato: " + e.message, false);
+  }
+  try {
+    status("st-save", "Salvataggio…", true);
+    const body = "// Updated via admin panel on " + new Date().toISOString() +
+      "\nconst SITE_CONTENT = " + JSON.stringify(state.content, null, 2) + ";\n";
+    const b64 = btoa(unescape(encodeURIComponent(body)));
+    const res = await gh(`/repos/${state.owner}/${state.repo}/contents/${PATH}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        message: "Update site content via admin panel",
+        content: b64,
+        sha: state.sha
+      })
+    });
+    state.sha = res.content.sha;
+    status("st-save", "Pubblicato ✓ — il sito si aggiorna entro 1–2 minuti.", true);
+    renderEditor();
+  } catch (e) {
+    status("st-save", "Errore: " + e.message, false);
+  }
 });
 </script>
 </body>

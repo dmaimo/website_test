@@ -1,0 +1,46 @@
+\documentclass{standalone}
+\usepackage{tikz}
+
+\usetikzlibrary[arrows,calc,positioning]
+\begin{document}
+\definecolor{interm-color}{rgb}{0.40,0.30,0.70}
+\definecolor{final-color}{rgb}{0.30,0.50,0.10}
+\sffamily
+
+\begin{tikzpicture}[%
+track/.style={line width=3pt,color=interm-color},
+interm/.style={draw,line width=1pt,circle,minimum size=0.75cm,
+color=interm-color,fill=interm-color!50!white},
+final/.style={draw,line width=1pt,circle,minimum size=0.75cm,
+color=final-color,fill=final-color!50!white}
+]
+\node (begin) {BEGIN};
+\node[interm,right=of begin] (idea) {};
+\node[above] at (idea.north) {Idea};
+\draw[track] (begin) -- (idea);
+\node[interm,right=of idea] (research) {};
+\node[above] at (research.north) {Research};
+\draw[track] (idea) -- (research);
+\node[interm,right=of research] (write) {};
+\node[above] at (write.north) {Write};
+\draw[track] (research) -- (write);
+\node[final,right=of write] (publish) {};
+\node[above] at (publish.north) {\textbf{Publish}};
+\draw[track] (write) -- (publish);
+\node[below=of idea] (p1) {Perish!};
+\draw[track,-stealth'] ($(idea.west) + (-0.5cm, 0)$) -- (p1);
+\node[below=of research] (p2) {Perish!};
+\draw[track,-stealth'] ($(research.west) + (-0.5cm, 0)$) -- (p2);
+\node[below=of write] (p3) {Perish!};
+\draw[track,-stealth'] ($(write.west) + (-0.5cm, 0)$) -- (p3);
+\node[below=of publish] (p4) {Perish!};
+\draw[track,-stealth'] ($(publish.west) + (-0.5cm, 0)$) -- (p4);
+\draw[track,-stealth'] (publish.east)
+arc [start angle=-90, end angle=90, radius=0.6cm]
+-- node[above,black] {REPEAT}
+($(idea) + (0.6cm, 1.2cm)$)
+.. controls ($(idea) + (0, 1.2cm)$) and ($(idea) + (-0.8cm, +1.2cm)$) ..
+($(idea.west) + (-0.5cm, +0.1cm)$);
+\end{tikzpicture}
+
+\end{document}

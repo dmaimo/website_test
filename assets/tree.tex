@@ -1,0 +1,34 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows,positioning}
+\usetikzlibrary{decorations.markings}
+
+\begin{document}
+
+\tikzset{solid node/.style={circle,draw,inner sep=1.5,fill=black},
+hollow node/.style={circle,draw,inner sep=1.5}}
+\begin{tikzpicture}[scale=1,font=\footnotesize]
+\tikzstyle{level 1}=[level distance=15mm,sibling distance=35mm]
+\tikzstyle{level 2}=[level distance=15mm,sibling distance=15mm]
+\node(0)[solid node, label=above:{$Pl. 1$}]{}
+child{node(1)[solid node]{}
+child{node[hollow node,label=below:{$(2,0)$}]{} edge from parent node[left]{$y$}}
+child{node[hollow node,label=below:{$(0,0)$}]{} edge from parent node[right]{$n$}}
+edge from parent node[left,xshift=-10]{$L$}
+}
+child{node(2)[solid node]{}
+child{node[hollow node,label=below:{$(1,1)$}]{} edge from parent node[left]{$y$}}
+child{node[hollow node,label=below:{$(0,0)$}]{} edge from parent node[right]{$n$}}
+edge from parent node[left,xshift=-3]{$M$}
+}
+child{node(3)[solid node]{}
+child{node[hollow node,label=below:{$(0,2)$}]{} edge from parent node[left]{$y$}}
+child{node[hollow node,label=below:{$(0,0)$}]{} edge from parent node[right]{$n$}}
+edge from parent node[right,xshift=10]{$R$}
+};
+\draw[dashed,rounded corners=10]($(1) + (-.2,.25)$)rectangle($(3) +(.2,-.25)$);
+\node at ($(1)!.5!(2)!.5!(3)$) {$Pl. 2$};
+\end{tikzpicture}
+
+\end{document}
