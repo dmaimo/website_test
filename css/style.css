@@ -447,6 +447,16 @@ address .lbl:first-child { margin-top: 0; }
   color: rgba(22,35,58,0.45);
 }
 
+.footer-id { display: flex; flex-direction: column; gap: 0.35rem; }
+a.orcid {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+a.orcid:hover { color: var(--sea); }
+.orcid-icon { flex: none; }
+address a.orcid { font-size: 0.9rem; color: var(--sea); }
+
 /* ---------- utilities ---------- */
 
 .btn {
