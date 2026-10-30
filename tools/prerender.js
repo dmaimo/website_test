@@ -39,7 +39,34 @@ function replaceInner(html, id, inner) {
   return html.slice(0, start) + `<${tag}${attrs}>` + inner + html.slice(end);
 }
 
+// Version each CSS/JS link with a short hash of the file, so browsers fetch
+// the new file as soon as it changes (e.g. after an edit from admin.html).
+const crypto = require("crypto");
+function stampVersions() {
+  const assets = ["css/style.css", "css/fonts.css", "js/site.js", "data/content.js"];
+  const ver = {};
+  for (const a of assets) {
+    const f = path.join(ROOT, a);
+    if (fs.existsSync(f)) ver[a] = crypto.createHash("sha1").update(fs.readFileSync(f)).digest("hex").slice(0, 10);
+  }
+  const files = fs.readdirSync(ROOT).filter(f => f.endsWith(".html")).map(f => path.join(ROOT, f));
+  const cdir = path.join(ROOT, "courses");
+  if (fs.existsSync(cdir)) fs.readdirSync(cdir).filter(f => f.endsWith(".html")).forEach(f => files.push(path.join(cdir, f)));
+  let n = 0;
+  for (const f of files) {
+    const src = fs.readFileSync(f, "utf8");
+    let html = src;
+    for (const [a, v] of Object.entries(ver)) {
+      const re = new RegExp(`((?:href|src)="(?:\\.\\./)?${a.replace(/[.\/]/g, m => "\\" + m)})(?:\\?v=[^"]*)?"`, "g");
+      html = html.replace(re, `$1?v=${v}"`);
+    }
+    if (html !== src) { fs.writeFileSync(f, html); n++; }
+  }
+  if (n) console.log(`versioned assets in ${n} file(s)`);
+}
+
 (async () => {
+  stampVersions();
   const browser = await chromium.launch();
   const page = await browser.newPage();
   let changed = 0;
