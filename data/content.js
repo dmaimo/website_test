@@ -212,7 +212,7 @@ const SITE_CONTENT = {
       authors: 'with <a class="author-link" href="https://www.kcl.ac.uk/people/leone-leonida" target="_blank" rel="noopener">L. Leonida</a>'
     },
     {
-      title: "Political Competition and Human Capital. Evidence across Countries",
+      title: "Political Competition and the Incentives to Educate",
       authors: 'with <a class="author-link" href="https://www.qmul.ac.uk/sef/staff/alfonsinaiona.html" target="_blank" rel="noopener">A. Iona</a>, <a class="author-link" href="https://www.kcl.ac.uk/people/leone-leonida" target="_blank" rel="noopener">L. Leonida</a> and A. D. Zehriun'
     },
     {
