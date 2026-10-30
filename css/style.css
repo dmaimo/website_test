@@ -190,8 +190,8 @@ h3[id] { scroll-margin-top: calc(var(--header-h, 64px) + 24px); }
   align-items: flex-end;
   min-height: 68vh;
   background:
-    linear-gradient(90deg, rgba(14,23,40,0.62) 0%, rgba(14,23,40,0.35) 45%, rgba(14,23,40,0) 75%),
-    linear-gradient(180deg, rgba(14,23,40,0) 45%, rgba(14,23,40,0.45) 100%),
+    radial-gradient(ellipse 48% 42% at 27% 74%, rgba(14,23,40,0.55) 0%, rgba(14,23,40,0.32) 45%, rgba(14,23,40,0) 100%),
+    linear-gradient(180deg, rgba(14,23,40,0) 70%, rgba(14,23,40,0.25) 100%),
     url("../assets/hero-cortile.jpg") center 40% / cover no-repeat,
     var(--ink);
 }
@@ -229,7 +229,7 @@ h3[id] { scroll-margin-top: calc(var(--header-h, 64px) + 24px); }
   line-height: 1.12;
   letter-spacing: -0.015em;
   color: var(--paper);
-  text-shadow: 0 2px 18px rgba(10,16,28,0.55);
+  text-shadow: 0 2px 22px rgba(10,16,28,0.7), 0 1px 3px rgba(10,16,28,0.55);
 }
 
 .hero .role {
@@ -237,7 +237,7 @@ h3[id] { scroll-margin-top: calc(var(--header-h, 64px) + 24px); }
   font-size: 1.15rem;
   color: rgba(251,251,249,0.88);
   max-width: 46ch;
-  text-shadow: 0 1px 10px rgba(10,16,28,0.75);
+  text-shadow: 0 1px 12px rgba(10,16,28,0.9), 0 1px 2px rgba(10,16,28,0.7);
 }
 
 .hero .role a {
