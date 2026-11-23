@@ -103,7 +103,7 @@
 // Per cambiare la password: apri la console del browser (F12) su questa
 // pagina e digita  hashPass("nuova-password")  — poi incolla il valore
 // ottenuto in GATE_HASH qui sotto.
-const GATE_HASH = "7df68d37d8d8f39103654281927eeb122de62ee44d5722b0d617eab5417c47e1";
+const GATE_HASH = "4dbca2e9a31fefc0dd07a2cc07f57f24d43551c54b44b1eef1066c48b803e7a0";
 
 async function hashPass(p) {
   const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("dariomap:" + p));
