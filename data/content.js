@@ -8,7 +8,7 @@ const SITE_CONTENT = {
   news: [
     {
       date: "2026-11-23",
-      text: "Website relaunched. Teaching material for the next academic year will be uploaded before lectures."
+      text: "Website relaunched. Teaching material for the second term will be uploaded before lectures."
     }
   ],
 
