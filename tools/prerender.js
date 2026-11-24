@@ -69,6 +69,8 @@ function stampVersions() {
   stampVersions();
   const browser = await chromium.launch();
   const page = await browser.newPage();
+  // never let the build count as a visit in the analytics services
+  await page.route(/(umami\.is|goatcounter\.com|gc\.zgo\.at)/, route => route.abort());
   let changed = 0;
   for (const file of PAGES) {
     const full = path.join(ROOT, file);
