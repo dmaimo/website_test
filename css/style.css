@@ -590,8 +590,8 @@ address a.orcid { font-size: 0.9rem; color: var(--sea); }
   font-size: 1.05rem;
   color: var(--ink);
 }
-.material-list a.material-tag { color: var(--sea); }
-.material-list a.material-tag:hover { color: var(--sea-deep); }
+.material-list a.material-tag { color: var(--brass); }
+.material-list a.material-tag:hover { color: #7d5f22; }
 .material-list .material-tag {
   font-family: var(--font-mono);
   font-weight: 400;
